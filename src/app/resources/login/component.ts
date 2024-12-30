@@ -33,8 +33,11 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() { }
 
   onLogin() {
-    // This is where you would typically handle authentication
-    // For now, let's assume the login is successful and navigate to the dashboard
-    this.router.navigate(['/dashboard']);
+    console.log('Attempting to log in');
+    this.router.navigate(['/dashboard']).then(success => {
+      console.log('Navigation success:', success);
+    }).catch(error => {
+      console.error('Navigation error:', error);
+    });
   }
 }

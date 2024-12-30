@@ -10,5 +10,6 @@ export const routes: Routes = [
   { path: 'landing-page', component: LandingComponent},
   { path: 'login-page', component: LoginPageComponent},
   { path: 'signup-page', component: SignUpPageComponent },
-  { path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard] },
+  // { path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardPageComponent},
 ];

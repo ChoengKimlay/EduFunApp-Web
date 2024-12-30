@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [],
-  selector: 'sidebar-component',
+  imports: [
+    RouterModule
+  ],
+  selector: 'app-sidebar',
   templateUrl: 'template.html',
-  styleUrls: ['style.css']
+  styleUrls: ['style.scss']
 })
 
 export class SidebarComponent implements OnInit {
