@@ -8,7 +8,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 
 @Component({
+    selector: 'app-header',
     standalone: true,
+    templateUrl: 'template.html',
     imports: [
         MatToolbarModule,
         MatIconModule,
@@ -17,11 +19,10 @@ import { Router } from '@angular/router';
         MatFormFieldModule,
         MatMenuModule
     ],
-    selector: 'app-header',
-    templateUrl: 'template.html'
 })
 
 export class HeaderComponent implements OnInit {
+
     constructor(
         private router: Router,
     ) { }
@@ -29,11 +30,6 @@ export class HeaderComponent implements OnInit {
     ngOnInit() { }
 
     logout() {
-        // Clear user session or local storage
-        // localStorage.removeItem('userToken'); // Adjust according to how you manage authentication
-        // sessionStorage.clear(); // Or clear everything in the session storage
-
-        // Navigate to login page
         this.router.navigate(['/login-page']);
     }
 }

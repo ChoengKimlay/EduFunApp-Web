@@ -7,4 +7,5 @@ import { RouterOutlet } from '@angular/router';
     template: `<router-outlet />`,
     imports: [RouterOutlet],
 })
+
 export class AppComponent {}
