@@ -17,9 +17,6 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:application",
 					"options": {
-						"customWebpackConfig": {
-							"path": "./webpack.config.ts"
-						},
 						"outputPath": "dist/edu-fun-app-web",
 						"index": "src/index.html",
 						"browser": "src/main.ts",
