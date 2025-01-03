@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { LandingComponent } from './resources/landing/component';
-import { LoginPageComponent } from './resources/login/component';
+import { LoginPageComponent } from './resources/account/auth/login/component';
 import { DashboardPageComponent } from './resources/dashboard/component';
 import { AuthGuard } from './core/auth/guards/auth.guard';
-import { SignUpPageComponent } from './resources/signup/component';
+import { SignUpPageComponent } from './resources/account/auth/signup/component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: '/landing-page', pathMatch: 'full' },

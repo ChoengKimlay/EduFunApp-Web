@@ -1,0 +1,52 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-200">
+
+    <div class="flex flex-row items-center mb-6 gap-x-4">
+        <img src="/images/gic_logo.png" class="h-14 mb-4">
+        <h1 class="text-3xl font-semibold">EduFunApp</h1>
+    </div>
+
+    <mat-card class="max-w-md w-full space-y-8 p-10 bg-white shadow-md rounded-lg">
+
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Create an account
+        </h2>
+
+        <form class="mt-8 space-y-6">
+
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Enter your Username" type="text" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Enter your email" type="email" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="Enter your password" type="password" required>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" class="w-full" (click)="onLogin()">Log in</button>
+
+            <div class="text-center text-lg my-4">or</div>
+
+            <button mat-stroked-button class="w-full flex flex-row items-center justify-center">
+                <mat-icon class="flex items-center">Google</mat-icon>
+                <p class="custom-text">Log in with Google</p>
+            </button>
+
+        </form>
+
+    </mat-card>
+
+    <small class="text-gray-500 m-2">by signing up you accept our <a href="#" class="underline">terms of use</a> and <a href="#" class="underline">policies</a></small>
+
+    <div class="text-center mt-6">
+        Already have an account? <a href="/login-page" class="underline text-blue-600 hover:text-blue-800">
+        Log in
+        </a>
+    </div>
+
+</div>

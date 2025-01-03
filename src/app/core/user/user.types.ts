@@ -12,6 +12,5 @@ export interface User {
 export interface Role {
     id: number;
     name: string;
-    slug: string;
     is_default: boolean;
 }

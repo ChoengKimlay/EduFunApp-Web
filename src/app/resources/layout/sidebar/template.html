@@ -1,0 +1,22 @@
+<div class="bg-white w-64 shadow-xl h-full min-h-screen p-5">
+
+    <div class="flex flex-row items-center mb-6 gap-x-4">
+        <img src="/images/gic_logo.png" class="h-8 mb-4">
+        <h1 class="text-3xl font-semibold">EduFunApp</h1>
+    </div>
+
+    <ul class="mt-6">
+
+        <li class="text-gray-700 p-2 rounded mt-1" [routerLink]="['/dashboard']" routerLinkActive="bg-gray-200"
+            [routerLinkActiveOptions]="{exact: true}">
+            <a class="block">Dashboard</a>
+        </li>
+
+        <li class="text-gray-700 p-2 rounded mt-1" [routerLink]="['/my-session']" routerLinkActive="bg-gray-200"
+            [routerLinkActiveOptions]="{exact: true}">
+            <a class="block">My session</a>
+        </li>
+
+    </ul>
+
+</div>
