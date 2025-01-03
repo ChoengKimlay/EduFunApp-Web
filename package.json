@@ -10,16 +10,16 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^17.2.0",
+    "@angular/animations": "^18.2.13",
     "@angular/cdk": "^17.3.10",
-    "@angular/common": "^17.2.0",
-    "@angular/compiler": "^17.2.0",
-    "@angular/core": "^17.2.0",
-    "@angular/forms": "^17.2.0",
+    "@angular/common": "^18.2.13",
+    "@angular/compiler": "^18.2.13",
+    "@angular/core": "^18.2.13",
+    "@angular/forms": "^18.2.13",
     "@angular/material": "^17.3.10",
-    "@angular/platform-browser": "^17.2.0",
-    "@angular/platform-browser-dynamic": "^17.2.0",
-    "@angular/router": "^17.2.0",
+    "@angular/platform-browser": "^18.2.13",
+    "@angular/platform-browser-dynamic": "^18.2.13",
+    "@angular/router": "^18.2.13",
     "dotenv": "^16.4.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -27,9 +27,9 @@
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^17.0.2",
-    "@angular-devkit/build-angular": "^17.2.3",
-    "@angular/cli": "^17.2.3",
-    "@angular/compiler-cli": "^17.2.0",
+    "@angular-devkit/build-angular": "^18.2.12",
+    "@angular/cli": "^18.2.12",
+    "@angular/compiler-cli": "^18.2.13",
     "@tailwindcss/postcss": "^4.0.0-beta.8",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.20",
@@ -41,6 +41,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
-    "typescript": "~5.3.2"
+    "typescript": "~5.5.4"
   }
 }
