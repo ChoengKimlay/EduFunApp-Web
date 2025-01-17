@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -7,7 +8,8 @@ import { RouterModule } from '@angular/router';
     styleUrl: 'style.scss',
     standalone: true,
     imports: [
-        RouterModule
+        RouterModule,
+        MatIconModule
     ],
 })
 
