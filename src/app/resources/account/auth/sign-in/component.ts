@@ -31,7 +31,7 @@ export class AuthSignInComponent implements OnInit {
 
     ngOnInit() {}
 
-    login() {
+    onLogin() {
         this.router.navigate(['/app/dashboard'])
     }
 }
