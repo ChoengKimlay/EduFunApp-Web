@@ -1,34 +1,36 @@
-<div class="flex flex-col justify-center items-center min-h-screen bg-blue-800 bg-cover bg-center"
-  style="background-image: url('../../../assets/img/Frame2608514.png');">
+<section>
 
-  <!-- Logo -->
-  <div class="flex flex-row items-center mb-6 gap-x-4">
-    <img src="../../../assets/img/gic_logo.png" class="h-14 mb-4" alt="EduFunApp logo">
-    <h1 class="text-3xl font-semibold text-white">EduFunApp</h1>
-  </div>
+    <!-- Main -->
+    <div class="flex flex-col justify-center items-center min-h-screen bg-img bg-cover bg-center">
 
-  <mat-card class="max-w-sm w-full space-y-4 p-6 bg-white rounded-lg shadow-lg">
-    <!-- Session PIN input -->
-    <mat-form-field appearance="fill" class="w-full">
-      <mat-label>Session PIN</mat-label>
-      <input matInput placeholder="Enter Session PIN">
-    </mat-form-field>
+        <!-- Logo -->
+        <div class="flex flex-row items-center mb-6 gap-x-4">
+            <img src="/images/gic_logo.png" class="h-14 mb-4" alt="EduFunApp logo">
+            <h1 class="text-3xl font-semibold text-white">EduFunApp</h1>
+        </div>
 
-    <!-- Enter button -->
-    <button mat-flat-button color="primary" class="w-full">Enter</button>
-  </mat-card>
-</div>
+        <div class="max-w-sm w-full space-y-4 p-6 rounded-lg bg-white">
+            <!-- Session PIN Field -->
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Session PIN</mat-label>
+                <input matInput placeholder="Enter Session PIN">
+            </mat-form-field>
 
-<!-- Create session link -->
-<div class="text-center fixed bottom-8 w-full">
-  <p class="text-white">Create your own session by <a [routerLink]="['/login-page']" class="underline hover:text-gray-400">loging in</a></p>
-</div>
+            <!-- Enter button -->
+            <button mat-flat-button class="w-full">Enter</button>
+        </div>
+    </div>
 
-<!-- Footer Links -->
-<div class="text-center text-white text-xs fixed bottom-4 w-full">
-  <a href="#" class="hover:underline pr-2">Terms</a> |
-  <a href="#" class="hover:underline px-2">Privacy</a> |
-  <a href="#" class="hover:underline pl-2">Cookie notice</a>
-</div>
+    <!-- Login -->
+    <div class="text-center fixed bottom-8 w-full">
+        <p class="text-white">Create your own session by <a [routerLink]="['auth/sign-in']" class="underline hover:text-gray-400">loging in</a></p>
+    </div>
 
+    <!-- Footer -->
+    <div class="text-center text-white text-xs fixed bottom-4 w-full">
+        <a href="#" class="hover:underline pr-2">Terms</a> |
+        <a href="#" class="hover:underline px-2">Privacy</a> |
+        <a href="#" class="hover:underline pl-2">Cookie notice</a>
+    </div>
 
+</section>

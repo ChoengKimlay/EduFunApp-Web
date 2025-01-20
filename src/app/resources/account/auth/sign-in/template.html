@@ -1,0 +1,73 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-200">
+    <div class="flex flex-row items-center mb-6 gap-x-4">
+        <img src="/images/gic_logo.png" class="h-14 mb-4" />
+        <h1 class="text-3xl font-semibold">EduFunApp</h1>
+    </div>
+
+    <div class="max-w-md w-full space-y-8 p-10 bg-white shadow-md rounded-lg">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Login to your account
+        </h2>
+
+        <form class="mt-8 space-y-6">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Email address</mat-label>
+                <input
+                    matInput
+                    placeholder="Enter your email"
+                    type="email"
+                    required
+                />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Password</mat-label>
+                <input
+                    matInput
+                    placeholder="Enter your password"
+                    type="password"
+                    required
+                />
+            </mat-form-field>
+
+            <div class="flex items-center justify-between">
+                <mat-checkbox class="text-sm">Remember me</mat-checkbox>
+                <a
+                    href="#"
+                    class="font-medium text-indigo-600 hover:text-indigo-500 text-sm"
+                >
+                    Forgot your password?
+                </a>
+            </div>
+
+            <button
+                mat-raised-button
+                color="primary"
+                class="w-full"
+                (click)="onLogin()"
+            >
+                Log in
+            </button>
+
+            <div class="text-center text-lg my-4">or</div>
+
+            <button
+                mat-stroked-button
+                class="w-full flex flex-row items-center justify-center"
+            >
+                <mat-icon class="flex items-center">Google</mat-icon>
+                <p class="custom-text">Log in with Google</p>
+            </button>
+        </form>
+    </div>
+
+    <div class="text-center mt-6">
+        Don't have an account?
+        <a
+            [routerLink]="['/auth/sign-up']"
+            class="underline text-blue-600 hover:text-blue-800"
+        >
+            Sign up now
+        </a>
+    </div>
+</div>

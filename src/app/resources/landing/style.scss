@@ -1,25 +1,3 @@
-.custom-background {
-  @apply bg-blue-800;
-  /* Your existing background color */
-  background-image: url('../../../assets/img/Frame2608514.png');
-  /* Update with your path */
-  background-size: cover;
-  background-position: center;
-}
-
-.mat-card {
-  @apply max-w-sm mx-auto;
-}
-
-.mat-form-field {
-  width: 100%;
-}
-
-button {
-  @apply mt-4;
-}
-
-.login-link {
-  color: white !important; // Force white color
-  text-decoration: none !important;
+.bg-img {
+    background-image: url('/images/background.png');
 }

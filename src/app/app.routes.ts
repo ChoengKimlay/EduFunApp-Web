@@ -1,24 +1,24 @@
 import { Routes } from '@angular/router';
 import { LandingComponent } from './resources/landing/component';
-import { LoginPageComponent } from './resources/login/component';
 import { DashboardPageComponent } from './resources/dashboard/component';
-import { AuthGuard } from '../app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from './core/auth/guards/noAuth.guard';
+import { AuthGuard } from './core/auth/guards/auth.guard';
 
-export const routes: Routes = [
-  { path: '', redirectTo: '/join', pathMatch: 'full' },
-  { 
-    path: 'join', 
-    component: LandingComponent
-  },
-  { 
-    path: 'login-page', 
-    component: LoginPageComponent,
-    canActivate: [NoAuthGuard],
-  },
-  { 
-    path: 'dashboard', 
-    component: DashboardPageComponent, 
-    canActivate: [AuthGuard] 
-  },
+export const appRoutes: Routes = [
+    {
+        path: '',
+        component: LandingComponent
+    },
+
+    {
+        path: 'auth',
+        canActivate: [NoAuthGuard],
+        loadChildren: () => import('app/resources/account/auth/auth.routes')
+    },
+
+    {
+        path: 'dashboard',
+        canActivate: [AuthGuard],
+        component: DashboardPageComponent
+    },
 ];

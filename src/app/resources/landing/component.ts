@@ -6,21 +6,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatInputModule,
-    RouterModule,
-    MatButtonModule,
-    MatFormFieldModule,
-  ],
-  selector: 'landing-page',
-  templateUrl: 'template.html',
-  styleUrls: ['style.scss']
+    selector: 'landing-page',
+    templateUrl: 'template.html',
+    styleUrl: 'style.scss',
+    standalone: true,
+    imports: [
+        MatCardModule,
+        MatInputModule,
+        RouterModule,
+        MatButtonModule,
+        MatFormFieldModule,
+    ],
 })
 
 export class LandingComponent implements OnInit {
-  constructor() { }
 
-  ngOnInit() { }
+    constructor() {}
+
+    ngOnInit() {}
 }

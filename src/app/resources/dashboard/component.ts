@@ -1,14 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { SidebarComponent } from '../layout/sidebar/component';
+import { HeaderComponent } from '../layout/header/component';
 
 @Component({
-  standalone: true,
-  imports: [],
-  selector: 'dashboard-page',
-  templateUrl: 'template.html'
+    selector: 'dashboard-page',
+    standalone: true,
+    templateUrl: 'template.html',
+    imports: [
+        SidebarComponent,
+        HeaderComponent
+    ],
 })
 
 export class DashboardPageComponent implements OnInit {
-  constructor() { }
 
-  ngOnInit() { }
+    constructor() { }
+
+    ngOnInit() { }
 }
