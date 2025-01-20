@@ -53,4 +53,5 @@ export class AuthService {
     const user = this.currentUserSubject.value;
     return user && user.roles && user.roles.includes(role);
   }
+  
 }

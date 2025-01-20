@@ -9,10 +9,11 @@
             Login to your account
         </h2>
 
-        <form class="mt-8 space-y-6">
+        <form class="mt-8 space-y-6" [formGroup]="form">
             <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Email address</mat-label>
                 <input
+                    formControlName="email"
                     matInput
                     placeholder="Enter your email"
                     type="email"
@@ -23,6 +24,7 @@
             <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Password</mat-label>
                 <input
+                    formControlName="password"
                     matInput
                     placeholder="Enter your password"
                     type="password"
@@ -54,6 +56,7 @@
             <button
                 mat-stroked-button
                 class="w-full flex flex-row items-center justify-center"
+                (click)="handleGoogleSignIn($event)"
             >
                 <mat-icon class="flex items-center">Google</mat-icon>
                 <p class="custom-text">Log in with Google</p>
