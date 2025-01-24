@@ -11,6 +11,7 @@ import { AuthService } from 'app/core/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { finalize, takeUntil } from 'rxjs';
 import { UnsubcribeClass } from 'app/core/class/unsubcribe.class';
+import { GoogleAuthService } from 'app/core/auth/google.service';
 
 @Component({
     selector: 'auth-sign-in',
@@ -42,12 +43,15 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
         private router: Router,
         private authService: AuthService,
         private http: HttpClient,
-
+        private googleAuthService: GoogleAuthService,
     ) {
         super();
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.googleAuthService.loadGoogleScript();
+        this.googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
+    }
 
     onLogin() {
         const body = this.form.value;

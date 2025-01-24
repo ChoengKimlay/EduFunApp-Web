@@ -26,7 +26,6 @@ import { UnsubcribeClass } from '../../core/class/unsubcribe.class';
   ],
   selector: 'login-page',
   templateUrl: 'template.html',
-  // styleUrls: ['./style.scss']
 })
 
 export class LoginPageComponent extends UnsubcribeClass implements OnInit, OnDestroy {
