@@ -15,7 +15,7 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-builders/custom-webpack:browser",
+					"builder": "@angular-builders/build-angular:browser",
 					"options": {
                         "customWebpackConfig": {
                             "path": "./webpack.config.ts"
@@ -64,7 +64,7 @@
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/custom-webpack:dev-server",
+					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
 						"buildTarget": "EduFunApp-Web:build",
 						"port": 4444
@@ -80,13 +80,13 @@
 					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
-					"builder": "@angular-devkit/custom-webpack:extract-i18n",
+					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
 						"buildTarget": "EduFunApp-Web:build"
 					}
 				},
 				"test": {
-					"builder": "@angular-devkit/custom-webpack:karma",
+					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
 						"polyfills": [
 							"zone.js",

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { env } from '../../../env/env';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,7 @@ export class AuthService {
 
   // Login method, replace with your backend API
   login(email: string, password: string) {
-    return this.http.post<any>(`${env.api}/auth/login`, { email, password })
+    return this.http.post<any>(`${'http://localhost:3000/api'}/auth/login`, { email, password })
       .pipe(map(res => {
         // Store user details and JWT token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(res.user));
