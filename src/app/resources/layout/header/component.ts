@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
     ngOnInit() { }
 
     logout() {
-        this.router.navigate(['/login-page']);
+        localStorage.removeItem('authToken');
+        sessionStorage.removeItem('authToken');
     }
 }

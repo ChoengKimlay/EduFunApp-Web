@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { AuthService } from 'app/core/auth/auth.service';
@@ -33,10 +33,7 @@ import { GoogleAuthService } from 'app/core/auth/google.service';
 
 export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDestroy {
 
-    form: any = {
-        email: null,
-        password: null
-    }
+    form: any;
     isLoading: boolean = false;
 
     constructor(
@@ -44,13 +41,22 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
         private authService: AuthService,
         private http: HttpClient,
         private googleAuthService: GoogleAuthService,
+        private formBuilder: FormBuilder
     ) {
         super();
     }
 
     ngOnInit() {
-        this.googleAuthService.loadGoogleScript();
-        this.googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
+        this.FormBuilder();
+        // this.googleAuthService.loadGoogleScript();
+        // this.googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
+    }
+
+    FormBuilder() {
+        this.form = this.formBuilder.group({
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required],
+        });
     }
 
     onLogin() {
@@ -64,7 +70,7 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
         .subscribe({
             next: (res) => {
                 console.log(res)
-                this.router.navigate(['/app/dashboard']);
+                this.router.navigate(['dashboard']);
             },
             error: (err) => {
                 console.log(err);
@@ -80,7 +86,7 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
         (res: any) => {
             console.log('Login successful:', res);
             // Handle success (e.g., save token, redirect user)
-            this.router.navigate(['/app/dashboard'])
+            this.router.navigate(['dashboard'])
         },
         (err: any) => {
             console.error('Login failed:', err);

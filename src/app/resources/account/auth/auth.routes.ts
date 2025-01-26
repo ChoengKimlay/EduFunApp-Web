@@ -2,9 +2,12 @@
 import { Routes } from '@angular/router';
 
 // ================================================================================>> Custom Library
-// Component
+
+
+// ==================================================================================>> Component
 import { AuthSignInComponent } from './sign-in/component';
 import { AuthSignUpComponent } from './sign-up/component';
+import { ForgotPasswordComponent } from './reset-password/component';
 
 export default [
     {
@@ -14,5 +17,9 @@ export default [
     {
         path: 'sign-up',
         component: AuthSignUpComponent,
+    },
+    {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
     },
 ] as Routes;
