@@ -1,4 +1,4 @@
-<div class="flex h-screen flex-col">
+<div class="flex h-screen flex-col overflow-hidden">
     <!-- Header component -->
     <app-header></app-header>
 
@@ -9,7 +9,6 @@
         <!-- Main content area -->
         <div class="flex-1 overflow-y-auto p-10">
             <ng-content></ng-content>
-            <!-- Slot for routing content -->
         </div>
     </div>
 </div>

@@ -1,23 +1,27 @@
 <mat-toolbar class="text-white border-b-2">
     <mat-toolbar-row class="justify-between items-center w-full">
-
         <div class="flex flex-row items-center gap-x-4">
             <h1 class="text-3xl font-semibold">EduFunApp</h1>
         </div>
 
         <!-- Profile and Logout with a dropdown menu -->
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="ml-auto">
-            <mat-icon class="">account_circle</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-                <mat-icon>account_circle</mat-icon>
-                <span>Account</span>
+        <div class="flex flex-row items-center gap-x-2 ml-auto">
+            <button mat-flat-button color="primary">Create</button>
+
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon class="">account_circle</mat-icon>
             </button>
-            <button mat-menu-item (click)="logout()">
-                <mat-icon>logout</mat-icon>
-                <span>Log out</span>
-            </button>
-        </mat-menu>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>account_circle</mat-icon>
+                    <span>Account</span>
+                </button>
+                <button mat-menu-item (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Log out</span>
+                </button>
+            </mat-menu>
+        </div>
     </mat-toolbar-row>
 </mat-toolbar>
+
