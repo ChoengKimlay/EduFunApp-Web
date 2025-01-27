@@ -39,7 +39,7 @@ export class AuthService {
   // Logout method
   logout() {
     // Remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUser'); 
     this.currentUserSubject.next(null);
   }
 
@@ -53,5 +53,5 @@ export class AuthService {
     const user = this.currentUserSubject.value;
     return user && user.roles && user.roles.includes(role);
   }
-  
+
 }

@@ -1,23 +1,22 @@
-<div class="bg-white w-64 shadow-xl h-full min-h-screen p-5">
+<div class="w-64 shadow-xl h-full min-h-screen p-2 border-r-2">
+    <ul class="space-y-4">
 
-    <div class="flex flex-row items-center mb-6 gap-x-4">
-        <img src="/images/gic_logo.png" class="h-8 mb-4">
-        <h1 class="text-3xl font-semibold">EduFunApp</h1>
-    </div>
-
-    <ul class="mt-6">
-
-        <li class="text-gray-700 p-2 rounded mt-1" [routerLink]="['/dashboard']" routerLinkActive="bg-gray-200"
+        <li class="p-2 rounded flex flex-row gap-x-2 text-white items-center" [routerLink]="['/dashboard']" routerLinkActive="bg-blue-900"
             [routerLinkActiveOptions]="{exact: true}">
-            <mat-icon svgIcon="mdi:account"></mat-icon>
+            <mat-icon>dashboard</mat-icon>
             <a class="block">Dashboard</a>
         </li>
 
-        <li class="text-gray-700 p-2 rounded mt-1" [routerLink]="['/my-session']" routerLinkActive="bg-gray-200"
+        <li class="text-gray-700 p-2 rounded flex flex-row gap-x-2 items-center" [routerLink]="['/library']" routerLinkActive="bg-blue-900"
             [routerLinkActiveOptions]="{exact: true}">
-            <a class="block">My session</a>
+            <mat-icon>menu</mat-icon>
+            <a class="block">Library</a>
+        </li>
+
+        <li class="text-gray-700 p-2 rounded flex flex-row gap-x-2 items-center" routerLinkActive="bg-blue-900" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>bar_chart</mat-icon>
+            <a class="block">Report</a>
         </li>
 
     </ul>
-
 </div>
