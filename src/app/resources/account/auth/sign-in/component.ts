@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { finalize, takeUntil } from 'rxjs';
 import { UnsubcribeClass } from 'app/core/class/unsubcribe.class';
 import { GoogleAuthService } from 'app/core/auth/google.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'auth-sign-in',
@@ -28,6 +29,7 @@ import { GoogleAuthService } from 'app/core/auth/google.service';
         MatCardModule,
         FormsModule,
         ReactiveFormsModule,
+        CommonModule,
     ],
 })
 
@@ -35,6 +37,7 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
 
     form: any;
     isLoading: boolean = false;
+    showBanner: boolean = true;
 
     constructor(
         private router: Router,
@@ -60,22 +63,27 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
     }
 
     onLogin() {
-        const body = this.form.value;
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            return;
+        }
 
-        this.authService.login(body.email, body.password)
-        .pipe(
-            finalize(() => (this.isLoading = false)),
-            takeUntil(this.unsubscribe$),
-        )
-        .subscribe({
-            next: (res) => {
-                console.log(res)
-                this.router.navigate(['dashboard']);
-            },
-            error: (err) => {
-                console.log(err);
-            },
-        });
+        this.isLoading = true;
+        const { email, password } = this.form.value;
+
+        this.authService.login(email, password)
+            .pipe(
+                finalize(() => (this.isLoading = false)),
+                takeUntil(this.unsubscribe$),
+            )
+            .subscribe({
+                next: (res) => {
+                    this.router.navigate(['dashboard']);
+                },
+                error: (err) => {
+                    console.error('Login error:', err);
+                },
+            });
     }
 
     handleGoogleSignIn(response: any): void {
@@ -92,5 +100,9 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
             console.error('Login failed:', err);
         }
         );
+    }
+
+    closeBaneer() {
+        this.showBanner = false;
     }
 }
