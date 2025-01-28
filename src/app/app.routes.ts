@@ -17,6 +17,11 @@ export const appRoutes: Routes = [
     },
 
     {
+        path: '',
+        loadChildren: () => import('app/resources/games/games.routes')
+    },
+
+    {
         path: 'dashboard',
         canActivate: [AuthGuard],
         component: DashboardPageComponent
