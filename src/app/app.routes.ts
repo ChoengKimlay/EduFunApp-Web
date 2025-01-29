@@ -3,6 +3,7 @@ import { LandingComponent } from './resources/landing/component';
 import { DashboardPageComponent } from './resources/dashboard/component';
 import { NoAuthGuard } from './core/auth/guards/noAuth.guard';
 import { AuthGuard } from './core/auth/guards/auth.guard';
+import { CreateQuizComponent } from './resources/create-quiz/component';
 
 export const appRoutes: Routes = [
     {
@@ -26,4 +27,10 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuard],
         component: DashboardPageComponent
     },
+
+    {
+        path: 'creator',
+        canActivate: [AuthGuard],
+        component: CreateQuizComponent
+    }
 ];

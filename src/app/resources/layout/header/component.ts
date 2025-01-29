@@ -5,8 +5,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-header',
@@ -18,7 +19,9 @@ import { AuthService } from 'app/core/auth/auth.service';
         MatButtonModule,
         MatInputModule,
         MatFormFieldModule,
-        MatMenuModule
+        MatMenuModule,
+        RouterModule,
+        CommonModule,
     ],
 })
 
