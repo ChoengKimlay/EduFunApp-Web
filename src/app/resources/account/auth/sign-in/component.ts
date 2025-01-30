@@ -10,7 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { AuthService } from 'app/core/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { finalize, takeUntil } from 'rxjs';
-import { UnsubcribeClass } from 'app/core/class/unsubcribe.class';
+import { UnsubscribeClass } from 'app/core/class/unsubscribe.class';
 import { GoogleAuthService } from 'app/core/auth/google.service';
 import { CommonModule } from '@angular/common';
 
@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common';
     ],
 })
 
-export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDestroy {
+export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnDestroy {
 
     form: any;
     isLoading: boolean = false;
@@ -102,7 +102,7 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
         );
     }
 
-    closeBaneer() {
+    closeBanner() {
         this.showBanner = false;
     }
 }

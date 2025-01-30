@@ -3,7 +3,7 @@ import { ParticipantService } from 'app/core/user/participant.service';
 import { GamesService } from '../game.service';
 import { Socket } from 'socket.io-client';
 import { takeUntil } from 'rxjs';
-import { UnsubcribeClass } from 'app/core/class/unsubcribe.class';
+import { UnsubscribeClass } from 'app/core/class/unsubscribe.class';
 import { Participant } from 'app/core/user/participant.type';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['../../landing/style.scss'],
 })
 
-export class WordCloudComponent extends UnsubcribeClass implements OnInit, OnDestroy {
+export class WordCloudComponent extends UnsubscribeClass implements OnInit, OnDestroy {
 
     socket: Socket = null!;
     participant: Participant = null!;
