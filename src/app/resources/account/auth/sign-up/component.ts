@@ -66,10 +66,10 @@ export class AuthSignUpComponent extends UnsubscribeClass implements OnInit, OnD
     FormBuilder() {
         this.form = this._formBuilder.group(
             {
-                username         : ['choeng kimlay', [Validators.required]],
-                email            : ['mingfongmen@gmail.com', [Validators.required, Validators.email]],
-                password         : ['123456', Validators.required],
-                confirm_password : ['123456', Validators.required],
+                username         : ['', [Validators.required]],
+                email            : ['', [Validators.required, Validators.email]],
+                password         : ['', Validators.required],
+                confirm_password : ['', Validators.required],
             },
             { validators: passwordMatchValidator() } // Custom validator for matching passwords
         );
