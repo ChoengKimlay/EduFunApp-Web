@@ -13,6 +13,9 @@ import { finalize, takeUntil } from 'rxjs';
 import { UnsubscribeClass } from 'app/core/class/unsubscribe.class';
 import { GoogleAuthService } from 'app/core/auth/google.service';
 import { CommonModule } from '@angular/common';
+import { ErrorHandleService } from 'app/helper/error-handle.service';
+import { SnackbarService } from 'app/helper/snack-bar.service';
+import GlobalConstants from 'app/helper/constants';
 
 @Component({
     selector: 'auth-sign-in',
@@ -44,7 +47,9 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
         private authService: AuthService,
         private http: HttpClient,
         private googleAuthService: GoogleAuthService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private _snackbarService: SnackbarService,
+        private _errorHandleService: ErrorHandleService,
     ) {
         super();
     }
@@ -79,9 +84,10 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
             .subscribe({
                 next: (res) => {
                     this.router.navigate(['dashboard']);
+                    this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
                 },
                 error: (err) => {
-                    console.error('Login error:', err);
+                    this._errorHandleService.handleHttpError(err);
                 },
             });
     }
