@@ -26,7 +26,7 @@ export class AuthService {
 
   // Login method, replace with your backend API
   login(email: string, password: string) {
-    return this.http.post<any>(`${'http://localhost:3000/api'}/auth/login`, { email, password })
+    return this.http.post<any>(`${'http://localhost:5000/api'}/auth/login`, { email, password })
       .pipe(map(res => {
         // Store user details and JWT token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(res.user));

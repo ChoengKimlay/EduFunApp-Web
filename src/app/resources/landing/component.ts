@@ -46,8 +46,8 @@ export class LandingComponent implements OnInit {
         };
     }
 
-   connect() {
-    this._gameService.connect();
+    connect() {
+    // this._gameService.connect();
         console.log('Connecting to room:', this.game_session_pin);
 
         this._gameService.joinRoom(this.game_session_pin).subscribe({

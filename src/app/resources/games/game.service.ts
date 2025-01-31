@@ -7,8 +7,8 @@ import { io, Socket } from 'socket.io-client';
 @Injectable({providedIn: 'root'})
 export class GamesService {
     
-    private socket: Socket = null!;
     private readonly SERVER_URL = env.ws;
+    private socket: Socket = io(this.SERVER_URL);
 
     private socketSubject: BehaviorSubject<Socket> = new BehaviorSubject<Socket>(null!);
     public messageSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -49,16 +49,13 @@ export class GamesService {
     onEvent<T>(eventName: string): Observable<T> {
         return new Observable((observer) => {
             console.log('Listening for event:', eventName);
-
-            // Add the event listener
             this.socket.on(eventName, (data: T) => {
                 console.log('Event received:', eventName, data);
-                observer.next(data); // Emit the data to the subscriber
+                observer.next(data);
             });
 
-            // Clean up when the observable is unsubscribed
             return () => {
-                this.socket.off(eventName); // Remove the event listener
+                this.socket.off(eventName);
             };
         });
     }

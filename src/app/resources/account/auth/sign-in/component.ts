@@ -13,6 +13,8 @@ import { finalize, takeUntil } from 'rxjs';
 import { UnsubcribeClass } from 'app/core/class/unsubcribe.class';
 import { GoogleAuthService } from 'app/core/auth/google.service';
 import { CommonModule } from '@angular/common';
+import { ParticipantService } from 'app/core/user/participant.service';
+import { GamesService } from 'app/resources/games/game.service';
 
 @Component({
     selector: 'auth-sign-in',
@@ -34,6 +36,7 @@ import { CommonModule } from '@angular/common';
 })
 
 export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDestroy {
+    game_session_pin: string = '';
 
     form: any;
     isLoading: boolean = false;
@@ -44,7 +47,10 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
         private authService: AuthService,
         private http: HttpClient,
         private googleAuthService: GoogleAuthService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private _gameService: GamesService,
+        private _participantService: ParticipantService,
+        private _router: Router
     ) {
         super();
     }
@@ -84,6 +90,27 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
                     console.error('Login error:', err);
                 },
             });
+    }
+
+    connect() {
+    // this._gameService.connect();
+        console.log('Connecting to room:', this.game_session_pin);
+
+        this._gameService.joinRoom(this.game_session_pin).subscribe({
+            next: (res) => {
+                console.log('Room joined:', res);
+                this._participantService.participant = {
+                    room_id: this.game_session_pin,
+                    room: res.room,
+                    is_connected: true,
+                    user_id: res.userId,
+                };
+                this._router.navigateByUrl(`${res.room.game}`);
+            },
+            error: (err) => {
+                console.error('Failed to join room:', err);
+            }
+        });
     }
 
     handleGoogleSignIn(response: any): void {

@@ -20,8 +20,6 @@
 
     <!-- hoster container allow to see and display the wordcloud  -->
     <ng-template #renderWordcloud>
-        <ng-container *ngFor="let message of messages">
-            <p class="">{{ message }}</p>
-        </ng-container>
+        <angular-tag-cloud [config]="options" [data]="data"></angular-tag-cloud>
     </ng-template>
 </div>

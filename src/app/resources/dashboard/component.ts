@@ -18,7 +18,7 @@ export class DashboardPageComponent implements OnInit {
     constructor(private service: DashboardService) { }
 
     ngOnInit() {
-
+        
     }
 
 }
