@@ -1,22 +1,21 @@
-import { Injectable } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate } from '@angular/router';
-import { AuthService } from '../auth.service'; // Service to manage authentication
+import { inject } from '@angular/core';
+import { Router, CanActivateFn, CanActivateChildFn } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { jwtDecode } from "jwt-decode"
+import { UserPayload } from 'helper/interfaces/payload.interface';
+import { of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate {
+export const AuthGuard: CanActivateFn | CanActivateChildFn = () => {
 
-  constructor(private authService: AuthService, private router: Router) { }
-
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-    const isAuthenticated = this.authService.isAuthenticated(); // Replace with actual authentication check
-    if (!isAuthenticated) {
-      this.router.navigate(['/login-page']);
-      return false;
+    const router: Router = inject(Router);
+    const authService = inject(AuthService);
+    const token = authService?.accessToken;
+    if (token) {
+        const tokenPayload: UserPayload = jwtDecode(token);
+        if (tokenPayload) {
+            return of(true);
+        }
     }
-    return true;
-  }
-}
+    // Not Allow the access
+    return of(router.parseUrl('/auth/sign-in'));
+};

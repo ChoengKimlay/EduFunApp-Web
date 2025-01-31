@@ -4,14 +4,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { AuthService } from 'app/core/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { finalize, takeUntil } from 'rxjs';
-import { UnsubcribeClass } from 'app/core/class/unsubcribe.class';
+import { UnsubscribeClass } from 'app/core/class/unsubscribe.class';
 import { GoogleAuthService } from 'app/core/auth/google.service';
+import { CommonModule } from '@angular/common';
+import { ErrorHandleService } from 'app/helper/error-handle.service';
+import { SnackbarService } from 'app/helper/snack-bar.service';
+import GlobalConstants from 'app/helper/constants';
 
 @Component({
     selector: 'auth-sign-in',
@@ -28,48 +32,64 @@ import { GoogleAuthService } from 'app/core/auth/google.service';
         MatCardModule,
         FormsModule,
         ReactiveFormsModule,
+        CommonModule,
     ],
 })
 
-export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDestroy {
+export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnDestroy {
 
-    form: any = {
-        email: null,
-        password: null
-    }
+    form: any;
     isLoading: boolean = false;
+    showBanner: boolean = true;
 
     constructor(
         private router: Router,
         private authService: AuthService,
         private http: HttpClient,
         private googleAuthService: GoogleAuthService,
+        private formBuilder: FormBuilder,
+        private _snackbarService: SnackbarService,
+        private _errorHandleService: ErrorHandleService,
     ) {
         super();
     }
 
     ngOnInit() {
-        this.googleAuthService.loadGoogleScript();
-        this.googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
+        this.FormBuilder();
+        // this.googleAuthService.loadGoogleScript();
+        // this.googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
+    }
+
+    FormBuilder() {
+        this.form = this.formBuilder.group({
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required],
+        });
     }
 
     onLogin() {
-        const body = this.form.value;
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            return;
+        }
 
-        this.authService.login(body.email, body.password)
-        .pipe(
-            finalize(() => (this.isLoading = false)),
-            takeUntil(this.unsubscribe$),
-        )
-        .subscribe({
-            next: (res) => {
-                console.log(res)
-                this.router.navigate(['/app/dashboard']);
-            },
-            error: (err) => {
-                console.log(err);
-            },
-        });
+        this.isLoading = true;
+        const { email, password } = this.form.value;
+
+        this.authService.login(email, password)
+            .pipe(
+                finalize(() => (this.isLoading = false)),
+                takeUntil(this.unsubscribe$),
+            )
+            .subscribe({
+                next: (res) => {
+                    this.router.navigateByUrl('/dashboard');
+                    this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
+                },
+                error: (err) => {
+                    this._errorHandleService.handleHttpError(err);
+                },
+            });
     }
 
     handleGoogleSignIn(response: any): void {
@@ -80,11 +100,15 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
         (res: any) => {
             console.log('Login successful:', res);
             // Handle success (e.g., save token, redirect user)
-            this.router.navigate(['/app/dashboard'])
+            this.router.navigate(['dashboard'])
         },
         (err: any) => {
             console.error('Login failed:', err);
         }
         );
+    }
+
+    closeBanner() {
+        this.showBanner = false;
     }
 }

@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from 'app/core/auth/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-header',
@@ -17,19 +19,24 @@ import { Router } from '@angular/router';
         MatButtonModule,
         MatInputModule,
         MatFormFieldModule,
-        MatMenuModule
+        MatMenuModule,
+        RouterModule,
+        CommonModule,
     ],
 })
 
 export class HeaderComponent implements OnInit {
 
     constructor(
+        private _authService: AuthService,
         private router: Router,
     ) { }
 
     ngOnInit() { }
 
     logout() {
-        this.router.navigate(['/login-page']);
+        this._authService.logout();
+        this.router.navigate(['/auth/sign-in']);
+        window.location.reload();
     }
 }

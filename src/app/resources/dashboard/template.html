@@ -1,15 +1,18 @@
-<div class="flex h-screen bg-gray-100">
-    <!-- Sidebar component -->
-    <app-sidebar></app-sidebar>
+<div class="flex h-screen overflow-hidden flex-col">
+    <!-- Header component -->
+    <app-header></app-header>
 
-    <!-- Main container for header and content -->
-    <div class="flex flex-col flex-1">
-        <!-- Header component -->
-        <app-header></app-header>
+    <!-- Main container for sidebar and content -->
+    <div class="flex w-full">
+        <!-- Sidebar component -->
+        <div class="w-1/7 text-white">
+            <app-sidebar></app-sidebar>
+        </div>
 
         <!-- Main content area -->
         <div class="flex-1 overflow-y-auto p-10">
-            <ng-content></ng-content> <!-- Slot for routing content -->
+            <ng-content></ng-content>
+            <h1 class="text-2xl font-bold">Welcome, {{ user?.username }}</h1>
         </div>
     </div>
 </div>
