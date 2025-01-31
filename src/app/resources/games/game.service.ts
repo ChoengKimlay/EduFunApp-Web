@@ -11,6 +11,7 @@ export class GamesService {
     private readonly SERVER_URL = env.ws;
 
     private socketSubject: BehaviorSubject<Socket> = new BehaviorSubject<Socket>(null!);
+    public messageSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
     
     constructor(
         private _participantService: ParticipantService,
@@ -19,7 +20,7 @@ export class GamesService {
     
 
     connect() {
-        this.disconnect();
+        // this.disconnect();
         this.socket = io(this.SERVER_URL);
         this.socketSubject.next(this.socket);
     }
@@ -47,20 +48,24 @@ export class GamesService {
     // Listen for a specific event
     onEvent<T>(eventName: string): Observable<T> {
         return new Observable((observer) => {
+            console.log('Listening for event:', eventName);
+
+            // Add the event listener
             this.socket.on(eventName, (data: T) => {
-                observer.next(data); // Push data to the subscriber
+                console.log('Event received:', eventName, data);
+                observer.next(data); // Emit the data to the subscriber
             });
 
             // Clean up when the observable is unsubscribed
             return () => {
-                this.socket.off(eventName); // Remove the listener
+                this.socket.off(eventName); // Remove the event listener
             };
         });
     }
 
-    // Emit a specific event
     emitEvent(eventName: string, data: any): void {
-        this.socket.emit(eventName, data);
+        console.log('Emitting event:', eventName, data);
+        this.socket.emit(eventName, data); // Emit the event to the server
     }
 
     disconnect() {

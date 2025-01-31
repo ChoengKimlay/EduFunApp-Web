@@ -1,5 +1,7 @@
 <div class="relative flex flex-col justify-center items-center min-h-screen bg-img bg-cover bg-center">
-    <h1 class="absolute top-2 right-1/2 translate-x-1/2 text-2xl tracking-wider font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-100 via-rose-600 to-gray-200">Word Cloud</h1>
+    <h1 class="absolute top-4 right-1/2 translate-x-1/2 text-2xl tracking-wider font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-200 via-gray-200 to-sky-200">
+        {{ question }}
+    </h1>
     <ng-container *ngIf="isHoster; else renderWordcloud">
         <!-- participant container only allow to input message -->
         <div class="max-w-sm w-full space-y-4 p-6 rounded-lg bg-white">

@@ -27,6 +27,7 @@ export class WordCloudComponent extends UnsubcribeClass implements OnInit, OnDes
     message: string = '';
     isHoster: boolean = false;
     messages: string[] = [];
+    question: string = '';
 
     constructor(
         private _participantService: ParticipantService,
@@ -34,28 +35,59 @@ export class WordCloudComponent extends UnsubcribeClass implements OnInit, OnDes
     ) { super() }
 
     ngOnInit() {
-        this._gameService.getSocket().pipe(
-            takeUntil(this.unsubscribe$),
-        ).subscribe(socket => this.socket = socket);
+         console.log('Initializing WordCloudComponent...');
 
+        // Ensure the socket is connected
+        this._gameService.connect();
+
+        // Subscribe to participant data
         this._participantService.participant$.subscribe(participant => {
-            this.participant = participant
+            if (participant) {
+                console.log('Participant data:', participant);
+                this.participant = participant;
 
-            //check if the user is the host so that they can display the wordcloud for everyone to see while the partipant only send message
-            if(this.participant.user_id === this.participant.room.users[0]) this.isHoster = true;
+                // Check if the user is the host
+                if (this.participant.user_id === this.participant.room.users[0]) {
+                    this.isHoster = true;
+                    console.log('User is the host.');
+                }
 
-            if(this.isHoster){
-                this._gameService.onEvent<string>('wordcloud/recieved-message').subscribe( data => {
-                    this.messages.push(data);
-                })
+                // Ensure the room is joined before setting up listeners
+                this._gameService.joinRoom(this.participant.room_id).subscribe({
+                    next: (res) => {
+                        console.log('Room joined:', res);
+                        this.setupSocketListeners(); // Set up listeners after joining the room
+                    },
+                    error: (err) => {
+                        console.error('Failed to join room:', err);
+                    }
+                });
             }
         });
     }
 
-    sendMessage(){
-        this._gameService.emitEvent('wordcloud/send-message', {
-            message: this.message,
-            roomId: this.participant.room_id,
+    setupSocketListeners() {
+        console.log('Setting up socket listeners...');
+
+        this._gameService.onEvent('wordcloud/received-message').subscribe((res: any) => {
+                console.log('Received message:', res.message);
+                this.messages.push(res.message);
+            });
+
+        this._gameService.onEvent('wordcloud/received-question').subscribe((res: any) => {
+            console.log('Received question:', res.message);
+            this.question = res.message;
         });
+    }
+
+    sendMessage() {
+        if (this.message.trim()) {
+            console.log('Sending message:', this.message);
+            this._gameService.emitEvent('wordcloud/send-message', {
+                message: this.message,
+                roomId: this.participant.room_id,
+            });
+            this.message = ''; // Clear the input after sending the message
+        }
     }
 }
