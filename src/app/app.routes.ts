@@ -5,19 +5,6 @@ import { NoAuthGuard } from './core/auth/guards/noAuth.guard';
 import { AuthGuard } from './core/auth/guards/auth.guard';
 import { CreateQuizComponent } from './resources/create-quiz/component';
 import { initialDataResolver } from './app.resolver';
-import { Injectable } from '@angular/core';
-
-@Injectable({
-    providedIn: 'root'
-})
-export class RedirectGuard implements CanActivate {
-    constructor(private router: Router) {}
-
-    canActivate(): boolean {
-        this.router.navigate(['/dashboard']);
-        return false;
-    }
-}
 
 export const appRoutes: Routes = [
     {
