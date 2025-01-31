@@ -8,6 +8,7 @@ import { Routes } from '@angular/router';
 import { AuthSignInComponent } from './sign-in/component';
 import { AuthSignUpComponent } from './sign-up/component';
 import { ForgotPasswordComponent } from './reset-password/component';
+import { AccountProfileComponent } from '../user-profile/component';
 
 export default [
     {
@@ -22,4 +23,9 @@ export default [
         path: 'forgot-password',
         component: ForgotPasswordComponent,
     },
+
+    {
+        path: 'profile',
+        component: AccountProfileComponent
+    }
 ] as Routes;

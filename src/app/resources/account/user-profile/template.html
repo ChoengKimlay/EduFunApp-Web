@@ -1,0 +1,136 @@
+<!-- account-profile.component.html -->
+<div class="max-w-4xl mx-auto p-6">
+    <!-- Profile Header -->
+    <div class="mb-8">
+        <div class="flex items-center gap-6">
+            <div class="relative">
+                <img src="https://via.placeholder.com/150"
+                    class="w-32 h-32 rounded-full border-4 border-white shadow-lg">
+                <button mat-mini-fab color="primary"
+                    class="absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/4">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">{{ profileForm.value.firstName }} {{
+                    profileForm.value.lastName }}</h1>
+                <p class="text-gray-600">{{ profileForm.value.jobTitle }} at {{ profileForm.value.company }}</p>
+            </div>
+        </div>
+    </div>
+
+    <mat-tab-group dynamicHeight>
+        <!-- Personal Info Tab -->
+        <mat-tab label="Personal Info">
+            <form [formGroup]="profileForm" class="p-6 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName">
+                        <mat-error *ngIf="profileForm.get('firstName')?.hasError('required')">
+                            Required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName">
+                        <mat-error *ngIf="profileForm.get('lastName')?.hasError('required')">
+                            Required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" type="email">
+                        <mat-error *ngIf="profileForm.get('email')?.hasError('email')">
+                            Invalid email
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Phone</mat-label>
+                        <input matInput formControlName="phone">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Timezone</mat-label>
+                        <mat-select formControlName="timezone">
+                            <mat-option value="GMT-4">GMT-4 (Eastern Time)</mat-option>
+                            <mat-option value="GMT-5">GMT-5 (Central Time)</mat-option>
+                            <mat-option value="GMT-6">GMT-6 (Mountain Time)</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Bio</mat-label>
+                    <textarea matInput formControlName="bio" rows="4"></textarea>
+                </mat-form-field>
+
+                <div class="flex justify-end gap-4">
+                    <button mat-stroked-button type="button">Cancel</button>
+                    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+                        [disabled]="!profileForm.valid">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </mat-tab>
+
+        <!-- Security Tab -->
+        <mat-tab label="Security">
+            <form [formGroup]="securityForm" class="p-6 space-y-6">
+                <div class="space-y-6">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Current Password</mat-label>
+                        <input matInput formControlName="currentPassword" type="password">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>New Password</mat-label>
+                        <input matInput formControlName="newPassword" type="password">
+                        <mat-hint>At least 8 characters</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput formControlName="confirmPassword" type="password">
+                    </mat-form-field>
+
+                    <div class="flex justify-end">
+                        <button mat-raised-button color="primary">Update Password</button>
+                    </div>
+                </div>
+            </form>
+        </mat-tab>
+
+        <!-- Preferences Tab -->
+        <mat-tab label="Preferences">
+            <form [formGroup]="preferences" class="p-6 space-y-6">
+                <div class="space-y-4">
+                    <mat-slide-toggle formControlName="newsletter" color="primary">
+                        Receive Newsletter
+                    </mat-slide-toggle>
+
+                    <mat-slide-toggle formControlName="notifications" color="primary">
+                        Email Notifications
+                    </mat-slide-toggle>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Theme</mat-label>
+                        <mat-select formControlName="theme">
+                            <mat-option value="light">Light</mat-option>
+                            <mat-option value="dark">Dark</mat-option>
+                            <mat-option value="system">System Default</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="flex justify-end">
+                        <button mat-raised-button color="primary">Save Preferences</button>
+                    </div>
+                </div>
+            </form>
+        </mat-tab>
+    </mat-tab-group>
+</div>
