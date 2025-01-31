@@ -45,6 +45,24 @@ export class GamesService {
         });
     }
 
+    createRoom(): Observable<any> {
+        return new Observable((observer) => {
+            // Emit the 'join' event to the server with the room id
+            this.socket.emit('room/create', { game: 'wordcloud '});
+
+            // Listen for the 'roomJoined' event from the server (only once)
+            this.socket.once('room/roomid', (res: { roomId: string }) => {
+                // Once we receive the room ID, pass it to the observer
+                observer.next(res.roomId);
+
+                this.socket.emit('room/join', { roomId: res.roomId });
+
+                // Complete the observable after receiving the room ID
+                observer.complete();
+            });
+        });
+    }
+
     // Listen for a specific event
     onEvent<T>(eventName: string): Observable<T> {
         return new Observable((observer) => {
