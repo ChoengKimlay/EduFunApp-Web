@@ -11,20 +11,10 @@ import { UserService }          from "app/core/user/user.service";
 })
 export class AuthService {
 
-    private currentUserSubject: BehaviorSubject<any>;
-    public currentUser: Observable<any>;
-
     constructor(
         private http: HttpClient,
         private userService: UserService,
-    ) {
-        // Check if the localStorage has a 'currentUser' and parse it if not null
-        const currentUser = localStorage.getItem('currentUser');
-        this.currentUserSubject = new BehaviorSubject<any>(
-            currentUser ? JSON.parse(currentUser) : null
-        );
-        this.currentUser = this.currentUserSubject.asObservable();
-    }
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -40,10 +30,6 @@ export class AuthService {
         return localStorage.getItem('accessToken') ?? '';
     }
 
-    // Getter to access the current user value
-    public get currentUserValue(): any {
-        return this.currentUserSubject.value;
-    }
 
     // Login method, replace with your backend API
     login(email: string, password: string) {
@@ -54,14 +40,6 @@ export class AuthService {
 
                     this.accessToken = res.token;
 
-                    // Store user details and JWT token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem(
-                        'currentUser',
-                        JSON.stringify(res.user)
-                    );
-
-                    this.currentUserSubject.next(res.user);
-
                     return res;
                 })
             );
@@ -70,10 +48,8 @@ export class AuthService {
     // Logout method
     logout() {
 
-        localStorage.removeItem('currentUser');
         localStorage.removeItem('accessToken');
 
-        this.currentUserSubject.next(null);
         return of(true);
     }
 
@@ -107,27 +83,11 @@ export class AuthService {
         };
         return this.http.post<any>(`${env.api}/auth/verify-otp`, requestBody).pipe(
             switchMap((response: any) => {
-                localStorage.setItem(
-                    'currentUser',
-                    JSON.stringify(response.user)
-                );
-                this.currentUserSubject.next(response.user);
 
                 this.accessToken = response.token;
 
                 return of(response); // Return a new observable with the response
             }),
         );
-    }
-
-    // Check if the user is authenticated
-    isAuthenticated(): boolean {
-        return !!this.currentUserSubject.value;
-    }
-
-    // Check if the user has a specific role
-    hasRole(role: string): boolean {
-        const user = this.currentUserSubject.value;
-        return user && user.roles && user.roles.includes(role);
     }
 }

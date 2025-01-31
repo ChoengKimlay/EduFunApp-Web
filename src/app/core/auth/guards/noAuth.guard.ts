@@ -1,22 +1,21 @@
 import { inject } from '@angular/core';
-import {
-    ActivatedRouteSnapshot,
-    CanActivateFn,
-    Router,
-    RouterStateSnapshot,
-} from '@angular/router';
-import { AuthService } from '../auth.service';
+import { CanActivateChildFn, CanActivateFn, Router } from '@angular/router';
+import { of } from 'rxjs';
+import { jwtDecode } from "jwt-decode"
+import { AuthService } from 'app/core/auth/auth.service';
+import { UserPayload } from 'helper/interfaces/payload.interface';
 
-export const NoAuthGuard: CanActivateFn = (
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-) => {
-    const router = inject(Router);
+export const NoAuthGuard: CanActivateFn | CanActivateChildFn = (_route, _state) => {
 
-    if (inject(AuthService).isAuthenticated()) {
-        router.navigateByUrl('/dashboard');
-        return false;
+    const router: Router = inject(Router);
+    const authService = inject(AuthService);
+    const token = authService?.accessToken;
+    if (token) {
+        const tokenPayload: UserPayload = jwtDecode(token);
+        if (tokenPayload) {
+            return of(router.parseUrl('/dashboard'));
+        }
     }
-
-    return true;
+    // Allow the access
+    return of(true);
 };

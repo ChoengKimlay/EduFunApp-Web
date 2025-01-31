@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { UserService } from "app/core/user/user.service";
 import { UserPayload } from "helper/interfaces/payload.interface";
 import { AuthService } from "./core/auth/auth.service";
-import { jwtDecode } from "jwt-decode"; // ✅ Correct Import
+import { jwtDecode } from "jwt-decode";
 
 export const initialDataResolver = () => {
     const router = inject(Router);
