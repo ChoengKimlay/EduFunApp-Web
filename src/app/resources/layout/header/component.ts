@@ -8,6 +8,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { GamesService } from 'app/resources/games/game.service';
+import { ParticipantService } from 'app/core/user/participant.service';
 
 @Component({
     selector: 'app-header',
@@ -28,15 +30,54 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent implements OnInit {
 
     constructor(
-        private _authService: AuthService,
-        private router: Router,
+        private authService: AuthService, private router: Router, private zone: NgZone,
+        private _gameservie: GamesService,
+        private _participantService: ParticipantService,
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() { 
+        this._participantService.participant = {
+            room_id: '',
+            user_id: '',
+            room: {
+                game: '',
+                users: [],
+            },
+            is_connected: false,
+        };
+    
+    }
 
     logout() {
-        this._authService.logout();
-        this.router.navigate(['/auth/sign-in']);
-        window.location.reload();
+        localStorage.removeItem('currentUser');
+        sessionStorage.removeItem('currentUser');
+        this.zone.run(() => {
+            this.router.navigate(['/auth/sign-in']).then(success => {
+                if (!success) {
+                    console.log('Redirect failed');
+                } else {
+                    console.log('Redirect successful');
+                }
+            }).catch(err => {
+                console.error('Error during navigation:', err);
+            });
+        });
     }
+
+    createRoom(){
+        console.log('create room')
+        this._gameservie.createRoom().subscribe(res => {
+            this._participantService.participant = {
+                room_id: res,
+                room: {
+                    game: 'wordcloud',
+                    users: [],
+                },
+                is_connected: true,
+                user_id: res?.userId,
+            };
+            this.router.navigateByUrl(`/wordcloud`);
+        });
+    }
+
 }

@@ -47,16 +47,23 @@ export class LandingComponent implements OnInit {
     }
 
     connect() {
-        this._gameService.connect();
-        console.log(this.game_session_pin)
-        this._gameService.joinRoom(this.game_session_pin).subscribe(res => {
-            this._participantService.participant = {
-                room_id: this.game_session_pin,
-                room: res.room,
-                is_connected: true,
-                user_id: res.userId,
-            };
-            this._router.navigateByUrl(`${res.room.game}`);
+    // this._gameService.connect();
+        console.log('Connecting to room:', this.game_session_pin);
+
+        this._gameService.joinRoom(this.game_session_pin).subscribe({
+            next: (res) => {
+                console.log('Room joined:', res);
+                this._participantService.participant = {
+                    room_id: this.game_session_pin,
+                    room: res.room,
+                    is_connected: true,
+                    user_id: res.userId,
+                };
+                this._router.navigateByUrl(`${res.room.game}`);
+            },
+            error: (err) => {
+                console.error('Failed to join room:', err);
+            }
         });
     }
 }

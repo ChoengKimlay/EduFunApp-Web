@@ -7,10 +7,11 @@ import { io, Socket } from 'socket.io-client';
 @Injectable({providedIn: 'root'})
 export class GamesService {
     
-    private socket: Socket = null!;
     private readonly SERVER_URL = env.ws;
+    private socket: Socket = io(this.SERVER_URL);
 
     private socketSubject: BehaviorSubject<Socket> = new BehaviorSubject<Socket>(null!);
+    public messageSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
     
     constructor(
         private _participantService: ParticipantService,
@@ -19,7 +20,7 @@ export class GamesService {
     
 
     connect() {
-        this.disconnect();
+        // this.disconnect();
         this.socket = io(this.SERVER_URL);
         this.socketSubject.next(this.socket);
     }
@@ -44,23 +45,42 @@ export class GamesService {
         });
     }
 
+    createRoom(): Observable<any> {
+        return new Observable((observer) => {
+            // Emit the 'join' event to the server with the room id
+            this.socket.emit('room/create', { game: 'wordcloud '});
+
+            // Listen for the 'roomJoined' event from the server (only once)
+            this.socket.once('room/roomid', (res: { roomId: string }) => {
+                // Once we receive the room ID, pass it to the observer
+                observer.next(res.roomId);
+
+                this.socket.emit('room/join', { roomId: res.roomId });
+
+                // Complete the observable after receiving the room ID
+                observer.complete();
+            });
+        });
+    }
+
     // Listen for a specific event
     onEvent<T>(eventName: string): Observable<T> {
         return new Observable((observer) => {
+            console.log('Listening for event:', eventName);
             this.socket.on(eventName, (data: T) => {
-                observer.next(data); // Push data to the subscriber
+                console.log('Event received:', eventName, data);
+                observer.next(data);
             });
 
-            // Clean up when the observable is unsubscribed
             return () => {
-                this.socket.off(eventName); // Remove the listener
+                this.socket.off(eventName);
             };
         });
     }
 
-    // Emit a specific event
     emitEvent(eventName: string, data: any): void {
-        this.socket.emit(eventName, data);
+        console.log('Emitting event:', eventName, data);
+        this.socket.emit(eventName, data); // Emit the event to the server
     }
 
     disconnect() {

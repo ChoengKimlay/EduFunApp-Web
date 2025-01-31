@@ -21,6 +21,7 @@
         "@angular/platform-browser-dynamic": "^17.2.0",
         "@angular/router": "^17.2.0",
         "@types/lodash-es": "^4.17.12",
+        "angular-tag-cloud-module": "^17.0.1",
         "dotenv": "^16.4.7",
         "flowbite": "^3.0.0",
         "jwt-decode": "^4.0.0",
