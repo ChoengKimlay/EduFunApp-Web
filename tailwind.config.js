@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./src/**/*.{html,ts,scss}"],
+    content: ["./src/**/*.{html,ts,scss}", "./node_modules/flowbite/**/*.js"],
     theme: {
         extend: {
             margin: {
@@ -8,6 +8,6 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    plugins: [require("flowbite/plugin")],
 };
 
