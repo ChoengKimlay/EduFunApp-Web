@@ -5,8 +5,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
+import { CommonModule } from '@angular/common';
 import { GamesService } from 'app/resources/games/game.service';
 import { ParticipantService } from 'app/core/user/participant.service';
 
@@ -20,7 +21,9 @@ import { ParticipantService } from 'app/core/user/participant.service';
         MatButtonModule,
         MatInputModule,
         MatFormFieldModule,
-        MatMenuModule
+        MatMenuModule,
+        RouterModule,
+        CommonModule,
     ],
 })
 

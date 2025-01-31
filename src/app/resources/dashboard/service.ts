@@ -4,14 +4,14 @@ import { Observable } from 'rxjs';
 import { env } from '../../../env/env';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class DashboardService {
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-  getDashboard(): Observable<any> {
-      return this.http.get<any>(`${env.api}/auth/login`);
-  }
+    getDashboard(): Observable<any> {
+        return this.http.get<any>(`${env.api}/auth/login`);
+    }
 }
 

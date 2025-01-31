@@ -10,11 +10,12 @@ import { MatCardModule } from '@angular/material/card';
 import { AuthService } from 'app/core/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { finalize, takeUntil } from 'rxjs';
-import { UnsubcribeClass } from 'app/core/class/unsubcribe.class';
+import { UnsubscribeClass } from 'app/core/class/unsubscribe.class';
 import { GoogleAuthService } from 'app/core/auth/google.service';
 import { CommonModule } from '@angular/common';
-import { ParticipantService } from 'app/core/user/participant.service';
-import { GamesService } from 'app/resources/games/game.service';
+import { ErrorHandleService } from 'app/helper/error-handle.service';
+import { SnackbarService } from 'app/helper/snack-bar.service';
+import GlobalConstants from 'app/helper/constants';
 
 @Component({
     selector: 'auth-sign-in',
@@ -35,8 +36,7 @@ import { GamesService } from 'app/resources/games/game.service';
     ],
 })
 
-export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDestroy {
-    game_session_pin: string = '';
+export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnDestroy {
 
     form: any;
     isLoading: boolean = false;
@@ -48,9 +48,8 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
         private http: HttpClient,
         private googleAuthService: GoogleAuthService,
         private formBuilder: FormBuilder,
-        private _gameService: GamesService,
-        private _participantService: ParticipantService,
-        private _router: Router
+        private _snackbarService: SnackbarService,
+        private _errorHandleService: ErrorHandleService,
     ) {
         super();
     }
@@ -84,33 +83,13 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
             )
             .subscribe({
                 next: (res) => {
-                    this.router.navigate(['dashboard']);
+                    this.router.navigateByUrl('/dashboard');
+                    this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
                 },
                 error: (err) => {
-                    console.error('Login error:', err);
+                    this._errorHandleService.handleHttpError(err);
                 },
             });
-    }
-
-    connect() {
-    // this._gameService.connect();
-        console.log('Connecting to room:', this.game_session_pin);
-
-        this._gameService.joinRoom(this.game_session_pin).subscribe({
-            next: (res) => {
-                console.log('Room joined:', res);
-                this._participantService.participant = {
-                    room_id: this.game_session_pin,
-                    room: res.room,
-                    is_connected: true,
-                    user_id: res.userId,
-                };
-                this._router.navigateByUrl(`${res.room.game}`);
-            },
-            error: (err) => {
-                console.error('Failed to join room:', err);
-            }
-        });
     }
 
     handleGoogleSignIn(response: any): void {
@@ -129,7 +108,7 @@ export class AuthSignInComponent extends UnsubcribeClass implements OnInit, OnDe
         );
     }
 
-    closeBaneer() {
+    closeBanner() {
         this.showBanner = false;
     }
 }
