@@ -1,7 +1,9 @@
 import { User } from "app/core/user/user.types";
 
 export interface UserPayload {
-    exp: number;
+    id: number;
+    username: string;
+    email: string;
     iat: number;
-    user: User
+    exp: number;
 }

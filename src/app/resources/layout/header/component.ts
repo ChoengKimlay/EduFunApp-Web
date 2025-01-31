@@ -28,25 +28,15 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent implements OnInit {
 
     constructor(
-        private authService: AuthService, private router: Router, private zone: NgZone,
+        private _authService: AuthService,
+        private router: Router,
     ) { }
 
     ngOnInit() { }
 
     logout() {
-        localStorage.removeItem('currentUser');
-        sessionStorage.removeItem('currentUser');
-        this.zone.run(() => {
-            this.router.navigate(['/auth/sign-in']).then(success => {
-                if (!success) {
-                    console.log('Redirect failed');
-                } else {
-                    console.log('Redirect successful');
-                }
-            }).catch(err => {
-                console.error('Error during navigation:', err);
-            });
-        });
+        this._authService.logout();
+        this.router.navigate(['/auth/sign-in']);
+        window.location.reload();
     }
-
 }

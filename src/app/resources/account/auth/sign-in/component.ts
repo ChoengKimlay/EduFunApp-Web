@@ -83,7 +83,7 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
             )
             .subscribe({
                 next: (res) => {
-                    this.router.navigate(['dashboard']);
+                    this.router.navigateByUrl('/dashboard');
                     this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
                 },
                 error: (err) => {
