@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ParticipantService } from 'app/core/user/participant.service';
 import { GamesService } from '../game.service';
 import { Socket } from 'socket.io-client';
-import { takeUntil, BehaviorSubject } from 'rxjs';
-import { UnsubcribeClass } from 'app/core/class/unsubcribe.class';
+import { BehaviorSubject } from 'rxjs';
 import { Participant } from 'app/core/user/participant.type';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -22,7 +21,7 @@ import { TagCloudComponent } from 'angular-tag-cloud-module';
     standalone: true,
     styleUrls: ['../../landing/style.scss'],
 })
-export class WordCloudComponent extends UnsubcribeClass implements OnInit, OnDestroy {
+export class WordCloudComponent implements OnInit {
     socket: Socket = null!;
     participant: Participant = null!;
     message: string = '';
@@ -48,7 +47,7 @@ export class WordCloudComponent extends UnsubcribeClass implements OnInit, OnDes
     constructor(
         private _participantService: ParticipantService,
         private _gameService: GamesService,
-    ) { super(); }
+    ) {  }
 
     ngOnInit() {
         console.log('Initializing WordCloudComponent...');
@@ -76,7 +75,7 @@ export class WordCloudComponent extends UnsubcribeClass implements OnInit, OnDes
         });
 
         // Subscribe to messages$ and update the word cloud whenever messages change
-        this.messages$.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+        this.messages$.subscribe(() => {
             this.updateWordCloud();
         });
     }
