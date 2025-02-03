@@ -1,0 +1,8 @@
+.halftone-bg {
+  background-image: radial-gradient(black 8%, transparent 10%);
+  background-size: 10px 10px;
+  background-repeat: repeat;
+  opacity: 0.25;
+  z-index: 1;
+  background-attachment: fixed; /* Keeps the background fixed while scrolling */
+}

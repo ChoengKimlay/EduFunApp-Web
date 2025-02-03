@@ -19,6 +19,7 @@ import { TagCloudComponent } from 'angular-tag-cloud-module';
         TagCloudComponent,
     ],
     standalone: true,
+    styleUrl: 'style.scss',
 })
 export class WordCloudComponent implements OnInit {
 
@@ -35,12 +36,12 @@ export class WordCloudComponent implements OnInit {
     messages$ = new BehaviorSubject<string[]>([]); // Reactive message list
     question: string = 'What did you have for breakfast, today?';
     public data: CloudData[] = [
-        { text: 'gaming', weight: 2, color: '#FCA5A5' },
-        { text: 'i love you', weight: 2, color: '#F87171' },
-        { text: 'good morning', weight: 4, color: '#60A5FA' },
-        { text: 'have fun', weight: 2, color: '#60A5FA' },
-        { text: 'good night', weight: 4, color: '#60A5FA' },
-        { text: 'Valorant', weight: 10, color: '#60A5FA' },
+        { text: 'gaming', weight: 2, color: '#f59e0b' },
+        { text: 'i love you', weight: 2, color: '#2563eb' },
+        { text: 'good morning', weight: 4, color: '#4b5563' },
+        { text: 'have fun', weight: 2, color: '#9ca3af' },
+        { text: 'good night', weight: 4, color: '#db2777' },
+        { text: 'Valorant', weight: 10, color: '#f43f5e' },
     ];
     public options: CloudOptions = {
         width: 800,
@@ -53,14 +54,15 @@ export class WordCloudComponent implements OnInit {
     total_user: number = 0;
 
     tailwindColors: string[] = [
-        '#FEE2E2', '#FECACA', '#FCA5A5', '#F87171', // Red 100-400
-        '#FEF3C7', '#FDE68A', '#FCD34D', '#FBBF24', // Yellow 100-400
-        '#D1FAE5', '#A7F3D0', '#6EE7B7', '#34D399', // Green 100-400
-        '#DBEAFE', '#BFDBFE', '#93C5FD', '#60A5FA', // Blue 100-400
-        '#E0E7FF', '#C7D2FE', '#A5B4FC', '#818CF8', // Indigo 100-400
-        '#EDE9FE', '#DDD6FE', '#C4B5FD', '#A78BFA', // Purple 100-400
-        '#F3E8FF', '#E9D5FF', '#D8B4FE', '#C084FC', // Violet 100-400
-    ];
+        "#fb7185", "#f43f5e", "#e11d48", // Red shades (400 to 600)
+        "#f59e0b", "#d97706", "#b45309", // Yellow shades (400 to 600)
+        "#10b981", "#059669", "#047857", // Green shades (400 to 600)
+        "#2563eb", "#1d4ed8", "#1e40af",   // Blue shades (400 to 600)
+        "#4f46e5", "#4338ca", "#3730a3",  // Indigo shades (400 to 600)
+        "#9333ea", "#7e22ce", "#6b21a8",  // Purple shades (400 to 600)
+        "#db2777", "#be185d", "#9d174d",   // Pink shades (400 to 600)
+        "#9ca3af", "#6b7280", "#4b5563",  // Gray shades (400 to 600)
+    ]
     constructor(
         private _participantService: ParticipantService,
         private _gameService: GamesService,
@@ -93,10 +95,9 @@ export class WordCloudComponent implements OnInit {
         });
 
         // Subscribe to messages$ and update the word cloud whenever messages change
-        this.messages$.subscribe(() => {
-            console.log('first')
-            this.updateWordCloud();
-        });
+        // this.messages$.subscribe(() => {
+        //     this.updateWordCloud();
+        // });
     }
 
     setupSocketListeners() {
@@ -136,7 +137,7 @@ export class WordCloudComponent implements OnInit {
 
         this.data = Array.from(messageCountMap.entries()).map(([text, weight]) => ({
             text,
-            weight: weight++,
+            weight: weight + 1,
             color: this.getRandomColor()
         }));
     }
