@@ -30,12 +30,13 @@ import { ParticipantService } from 'app/core/user/participant.service';
 export class HeaderComponent implements OnInit {
     roomid: string = '';
     constructor(
-        private authService: AuthService, private router: Router, private zone: NgZone,
+        private _authService: AuthService,
+        private router: Router, private zone: NgZone,
         private _gameservie: GamesService,
         private _participantService: ParticipantService,
     ) { }
 
-    ngOnInit() { 
+    ngOnInit() {
         this._participantService.participant = {
             room_id: '',
             user_id: '',
@@ -45,23 +46,13 @@ export class HeaderComponent implements OnInit {
             },
             is_connected: false,
         };
-    
+
     }
 
     logout() {
-        localStorage.removeItem('currentUser');
-        sessionStorage.removeItem('currentUser');
-        this.zone.run(() => {
-            this.router.navigate(['/auth/sign-in']).then(success => {
-                if (!success) {
-                    console.log('Redirect failed');
-                } else {
-                    console.log('Redirect successful');
-                }
-            }).catch(err => {
-                console.error('Error during navigation:', err);
-            });
-        });
+        this._authService.logout();
+        this.router.navigate(['/auth/sign-in']);
+        window.location.reload();
     }
 
     createRoom(){
