@@ -19,10 +19,9 @@ import { TagCloudComponent } from 'angular-tag-cloud-module';
         TagCloudComponent,
     ],
     standalone: true,
-    styleUrls: ['../../landing/style.scss'],
 })
 export class WordCloudComponent implements OnInit {
-    socket: Socket = null!;
+
     participant: Participant = {
         room_id: '000000',
         user_id: '',
@@ -35,16 +34,16 @@ export class WordCloudComponent implements OnInit {
     isHoster: boolean = false;
     messages$ = new BehaviorSubject<string[]>([]); // Reactive message list
     question: string = 'What did you have for breakfast, today?';
-    data: CloudData[] = [
-        { text: 'gaming', weight: 1, color: '#FCA5A5' },
+    public data: CloudData[] = [
+        { text: 'gaming', weight: 2, color: '#FCA5A5' },
         { text: 'i love you', weight: 2, color: '#F87171' },
         { text: 'good morning', weight: 4, color: '#60A5FA' },
-        { text: 'have fun', weight: 1, color: '#60A5FA' },
+        { text: 'have fun', weight: 2, color: '#60A5FA' },
         { text: 'good night', weight: 4, color: '#60A5FA' },
-        { text: 'Valorant', weight: 3, color: '#60A5FA' },
+        { text: 'Valorant', weight: 10, color: '#60A5FA' },
     ];
-    options: CloudOptions = {
-        width: 1000,
+    public options: CloudOptions = {
+        width: 800,
         height: 400,
         overflow: true,
         strict: true,
@@ -95,6 +94,7 @@ export class WordCloudComponent implements OnInit {
 
         // Subscribe to messages$ and update the word cloud whenever messages change
         this.messages$.subscribe(() => {
+            console.log('first')
             this.updateWordCloud();
         });
     }
@@ -136,7 +136,7 @@ export class WordCloudComponent implements OnInit {
 
         this.data = Array.from(messageCountMap.entries()).map(([text, weight]) => ({
             text,
-            weight,
+            weight: weight++,
             color: this.getRandomColor()
         }));
     }

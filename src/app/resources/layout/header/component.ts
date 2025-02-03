@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     roomid: string = '';
     constructor(
         private _authService: AuthService,
-        private router: Router, private zone: NgZone,
+        private router: Router,
         private _gameservie: GamesService,
         private _participantService: ParticipantService,
     ) { }

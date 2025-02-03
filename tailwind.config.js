@@ -5,9 +5,13 @@ module.exports = {
         extend: {
             margin: {
                 0: "0",
-            },
+            }
         },
     },
-    plugins: [require("flowbite/plugin")],
+    plugins: [
+        require("flowbite/plugin"),
+        require("@designbycode/tailwindcss-text-stroke"),
+        require('tailwindcss-motion')
+    ],
 };
 
