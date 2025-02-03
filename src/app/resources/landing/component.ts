@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ParticipantService } from 'app/core/user/participant.service';
 import { GamesService } from '../games/game.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SnackbarService } from 'app/helper/snack-bar.service';
 
 @Component({
     selector: 'landing-page',
@@ -32,6 +33,7 @@ export class LandingComponent implements OnInit {
         private _participantService: ParticipantService,
         private _gameService: GamesService,
         private _router: Router,
+        private _snackbarService: SnackbarService,
     ) {}
 
     ngOnInit() {
@@ -52,6 +54,10 @@ export class LandingComponent implements OnInit {
 
         this._gameService.joinRoom(this.game_session_pin).subscribe({
             next: (res) => {
+                if(!res.room){
+                    this._snackbarService.openSnackBar('Room not found', 'error');
+                    return;
+                }
                 console.log('Room joined:', res);
                 this._participantService.participant = {
                     room_id: this.game_session_pin,
@@ -59,10 +65,10 @@ export class LandingComponent implements OnInit {
                     is_connected: true,
                     user_id: res.userId,
                 };
-                this._router.navigateByUrl(`${res.room.game}`);
+                this._router.navigateByUrl(`${res.room.game.trim()}`);
             },
             error: (err) => {
-                console.error('Failed to join room:', err);
+                this._snackbarService.openSnackBar('Room not found', 'error');
             }
         });
     }

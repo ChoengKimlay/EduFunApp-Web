@@ -55,8 +55,6 @@ export class GamesService {
                 // Once we receive the room ID, pass it to the observer
                 observer.next(res.roomId);
 
-                this.socket.emit('room/join', { roomId: res.roomId });
-
                 // Complete the observable after receiving the room ID
                 observer.complete();
             });
@@ -66,9 +64,7 @@ export class GamesService {
     // Listen for a specific event
     onEvent<T>(eventName: string): Observable<T> {
         return new Observable((observer) => {
-            console.log('Listening for event:', eventName);
             this.socket.on(eventName, (data: T) => {
-                console.log('Event received:', eventName, data);
                 observer.next(data);
             });
 

@@ -16,24 +16,42 @@ import { TagCloudComponent } from 'angular-tag-cloud-module';
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
-        TagCloudComponent
+        TagCloudComponent,
     ],
     standalone: true,
     styleUrls: ['../../landing/style.scss'],
 })
 export class WordCloudComponent implements OnInit {
     socket: Socket = null!;
-    participant: Participant = null!;
+    participant: Participant = {
+        room_id: '000000',
+        user_id: '',
+        room: {
+            game: '',
+            users: [],
+        }
+    };
     message: string = '';
     isHoster: boolean = false;
     messages$ = new BehaviorSubject<string[]>([]); // Reactive message list
-    question: string = '';
-    data: CloudData[] = [];
+    question: string = 'What did you have for breakfast, today?';
+    data: CloudData[] = [
+        { text: 'gaming', weight: 1, color: '#FCA5A5' },
+        { text: 'i love you', weight: 2, color: '#F87171' },
+        { text: 'good morning', weight: 4, color: '#60A5FA' },
+        { text: 'have fun', weight: 1, color: '#60A5FA' },
+        { text: 'good night', weight: 4, color: '#60A5FA' },
+        { text: 'Valorant', weight: 3, color: '#60A5FA' },
+    ];
     options: CloudOptions = {
         width: 1000,
         height: 400,
-        overflow: false,
+        overflow: true,
+        strict: true,
+        randomizeAngle: true,
     };
+
+    total_user: number = 0;
 
     tailwindColors: string[] = [
         '#FEE2E2', '#FECACA', '#FCA5A5', '#F87171', // Red 100-400
@@ -65,6 +83,7 @@ export class WordCloudComponent implements OnInit {
                 this._gameService.joinRoom(this.participant.room_id).subscribe({
                     next: (res) => {
                         console.log('Room joined:', res);
+                        this.total_user = res.room.users.length;
                         this.setupSocketListeners();
                     },
                     error: (err) => {
@@ -85,6 +104,10 @@ export class WordCloudComponent implements OnInit {
         this._gameService.onEvent<{message: string}>('wordcloud/recieved-message').subscribe((res: any) => {
             console.log('Received message:', res);
             this.messages$.next([...this.messages$.value, res.message]);
+        });
+
+        this._gameService.onEvent<{message: string}>('room/user').subscribe((res: any) => {
+            this.total_user = res.length;
         });
 
         this._gameService.onEvent<{message: string}>('wordcloud/recieved-question').subscribe((res: any) => {

@@ -28,7 +28,7 @@ import { ParticipantService } from 'app/core/user/participant.service';
 })
 
 export class HeaderComponent implements OnInit {
-
+    roomid: string = '';
     constructor(
         private authService: AuthService, private router: Router, private zone: NgZone,
         private _gameservie: GamesService,
@@ -67,17 +67,23 @@ export class HeaderComponent implements OnInit {
     createRoom(){
         console.log('create room')
         this._gameservie.createRoom().subscribe(res => {
-            this._participantService.participant = {
-                room_id: res,
-                room: {
-                    game: 'wordcloud',
-                    users: [],
-                },
-                is_connected: true,
-                user_id: res?.userId,
-            };
-            this.router.navigateByUrl(`/wordcloud`);
+            this.roomid = res;
+            console.log(this.roomid)
+            
+            this._gameservie.joinRoom(this.roomid).subscribe(res => {
+                console.log('Room joined:', res);
+                this._participantService.participant = {
+                    room_id: this.roomid,
+                    room: res.room,
+                    is_connected: true,
+                    user_id: res.userId,
+                };
+                console.log(res.room.game)
+                this.router.navigateByUrl(`/${res.room.game.trim()}`);
+            });
         });
+
+        
     }
 
 }

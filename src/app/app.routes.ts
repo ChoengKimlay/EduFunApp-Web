@@ -19,7 +19,7 @@ export const appRoutes: Routes = [
     },
 
     {
-        path: 'games',
+        path: '',
         loadChildren: () => import('app/resources/games/games.routes')
     },
 

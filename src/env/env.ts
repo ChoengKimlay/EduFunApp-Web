@@ -4,6 +4,3 @@ export const env = {
 }
 
 // should really get those url from env file instead but i am lazy. u shouldn't though as it is best practice
-
-
-// should really get those url from env file instead but i am lazy. u shouldn't though as it is best practice
