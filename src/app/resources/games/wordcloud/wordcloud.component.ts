@@ -42,7 +42,7 @@ export class WordCloudComponent implements OnInit {
         { text: 'good morning', weight: 4, color: '#4b5563' },
         { text: 'have fun', weight: 2, color: '#9ca3af' },
         { text: 'good night', weight: 4, color: '#db2777' },
-        { text: 'Valorant', weight: 10, color: '#f43f5e' },
+        { text: 'Valorant', weight: 3, color: '#f43f5e' },
     ];
     public options: CloudOptions = {
         width: 800,

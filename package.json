@@ -40,6 +40,7 @@
         "@tailwindcss/postcss": "^4.0.0-beta.8",
         "@types/jasmine": "~5.1.0",
         "@types/jwt-decode": "^2.2.1",
+        "@types/node": "^22.13.1",
         "autoprefixer": "^10.4.20",
         "jasmine-core": "~5.1.0",
         "karma": "~6.4.0",

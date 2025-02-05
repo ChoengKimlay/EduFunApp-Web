@@ -62,9 +62,16 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
 
     ngOnInit() {
         this.FormBuilder();
-        // this.googleAuthService.loadGoogleScript();
-        // this.googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
+        
+        this.googleAuthService.loadGoogleScript()
+            .then(() => {
+                this.googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
+            })
+            .catch((error) => {
+                console.error('Failed to load Google SDK:', error);
+            });
     }
+
 
     FormBuilder() {
         this.form = this.formBuilder.group({
@@ -89,7 +96,7 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
             )
             .subscribe({
                 next: (res) => {
-                    this.router.navigateByUrl('/dashboard');
+                    this.router.navigateByUrl('/home');
                     this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
                 },
                 error: (err) => {
@@ -127,7 +134,7 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
         (res: any) => {
             console.log('Login successful:', res);
             // Handle success (e.g., save token, redirect user)
-            this.router.navigate(['dashboard'])
+            this.router.navigate(['home'])
         },
         (err: any) => {
             console.error('Login failed:', err);
