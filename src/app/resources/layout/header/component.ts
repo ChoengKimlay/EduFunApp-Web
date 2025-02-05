@@ -28,7 +28,6 @@ import { ParticipantService } from 'app/core/user/participant.service';
 })
 
 export class HeaderComponent implements OnInit {
-    roomid: string = '';
     constructor(
         private _authService: AuthService,
         private router: Router,
@@ -37,15 +36,7 @@ export class HeaderComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this._participantService.participant = {
-            room_id: '',
-            user_id: '',
-            room: {
-                game: '',
-                users: [],
-            },
-            is_connected: false,
-        };
+        
 
     }
 
@@ -55,26 +46,26 @@ export class HeaderComponent implements OnInit {
         window.location.reload();
     }
 
-    createRoom(){
-        console.log('create room')
-        this._gameservie.createRoom().subscribe(res => {
-            this.roomid = res;
-            console.log(this.roomid)
+    // createRoom(){
+    //     console.log('create room')
+    //     this._gameservie.createRoom().subscribe(res => {
+    //         this.roomid = res;
+    //         console.log(this.roomid)
             
-            this._gameservie.joinRoom(this.roomid).subscribe(res => {
-                console.log('Room joined:', res);
-                this._participantService.participant = {
-                    room_id: this.roomid,
-                    room: res.room,
-                    is_connected: true,
-                    user_id: res.userId,
-                };
-                console.log(res.room.game)
-                this.router.navigateByUrl(`/${res.room.game.trim()}`);
-            });
-        });
+    //         this._gameservie.joinRoom(this.roomid).subscribe(res => {
+    //             console.log('Room joined:', res);
+    //             this._participantService.participant = {
+    //                 room_id: this.roomid,
+    //                 room: res.room,
+    //                 is_connected: true,
+    //                 user_id: res.userId,
+    //             };
+    //             console.log(res.room.game)
+    //             this.router.navigateByUrl(`/${res.room.game.trim()}`);
+    //         });
+    //     });
 
         
-    }
+    // }
 
 }

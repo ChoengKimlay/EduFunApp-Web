@@ -24,17 +24,18 @@ import { TagCloudComponent } from 'angular-tag-cloud-module';
 export class WordCloudComponent implements OnInit {
 
     participant: Participant = {
-        room_id: '000000',
+        room_id: '------',
         user_id: '',
         room: {
             game: '',
             users: [],
         }
     };
+    isEditQuestion: boolean = false;
     message: string = '';
     isHoster: boolean = false;
     messages$ = new BehaviorSubject<string[]>([]); // Reactive message list
-    question: string = 'What did you have for breakfast, today?';
+    question: string = 'Enter your question?';
     public data: CloudData[] = [
         { text: 'gaming', weight: 2, color: '#f59e0b' },
         { text: 'i love you', weight: 2, color: '#2563eb' },
@@ -95,9 +96,9 @@ export class WordCloudComponent implements OnInit {
         });
 
         // Subscribe to messages$ and update the word cloud whenever messages change
-        // this.messages$.subscribe(() => {
-        //     this.updateWordCloud();
-        // });
+        this.messages$.subscribe(() => {
+            this.updateWordCloud();
+        });
     }
 
     setupSocketListeners() {

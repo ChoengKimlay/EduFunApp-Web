@@ -13,7 +13,7 @@ export const NoAuthGuard: CanActivateFn | CanActivateChildFn = (_route, _state) 
     if (token) {
         const tokenPayload: UserPayload = jwtDecode(token);
         if (tokenPayload) {
-            return of(router.parseUrl('/dashboard'));
+            return of(router.parseUrl('/home'));
         }
     }
     // Allow the access
