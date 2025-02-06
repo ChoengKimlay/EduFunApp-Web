@@ -90,4 +90,26 @@ export class AuthService {
             }),
         );
     }
+
+    verifyResetOtp(credentials: { email: string; otp: string }): Observable<any> {
+        const { email, otp } = credentials;
+
+        const requestBody = {
+            email,
+            otp,
+        };
+
+        return this.http.post<any>(`${env.api}/auth/verify-reset-otp`, requestBody)
+    }
+
+    resetPassword(credentials: { email: string; password: string }): Observable<any> {
+        const { email, password } = credentials;
+
+        const requestBody = {
+            email,
+            password,
+        };
+
+        return this.http.post<any>(`${env.api}/auth/reset-password`, requestBody)
+    }
 }

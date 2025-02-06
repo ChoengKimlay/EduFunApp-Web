@@ -1,7 +1,7 @@
 // ================================================================================>> Main Library
 import { CommonModule, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -28,7 +28,7 @@ import { ErrorHandleService } from 'app/helper/error-handle.service';
 import { UnsubscribeClass } from 'app/core/class/unsubscribe.class';
 
 @Component({
-    selector: 'otp',
+    selector: 'reset-otp',
     templateUrl: 'template.html',
     styleUrls: ['./style.scss'],
     standalone: true,
@@ -46,9 +46,11 @@ import { UnsubscribeClass } from 'app/core/class/unsubscribe.class';
     ],
 })
 
-export class AuthOTPComponent extends UnsubscribeClass implements OnInit, OnDestroy {
+export class AuthResetOTPComponent extends UnsubscribeClass implements OnInit, OnDestroy {
 
     @Input() email: string = '';
+
+    @Output() verifyOTP = new EventEmitter<any>();
 
     @ViewChild('input1') input1!: ElementRef;
     @ViewChild('input2') input2!: ElementRef;
@@ -75,7 +77,6 @@ export class AuthOTPComponent extends UnsubscribeClass implements OnInit, OnDest
 
     constructor(
         private _authService: AuthService,
-        private _router: Router,
         private _snackbarService: SnackbarService,
         private _errorHandleService: ErrorHandleService,
     ) {
@@ -138,12 +139,14 @@ export class AuthOTPComponent extends UnsubscribeClass implements OnInit, OnDest
             otp: this.otpCode
         };
 
-        this._authService.verifyOtp(credentials).subscribe({
+        this._authService.verifyResetOtp(credentials).subscribe({
             next: res => {
                 this.isLoading = false;
-                this.clearAllInput(); // Assuming this clears the input fields
-                this._router.navigate(['home']);
                 this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
+
+                this.verifyOTP.emit({
+                    verify: true,
+                });
             },
             error: err => {
                 this.isLoading = false;
