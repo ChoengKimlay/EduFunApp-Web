@@ -26,7 +26,7 @@ export class HomePageComponent extends UnsubscribeClass implements OnInit, OnDes
     roomid: string = '';
 
     isSidebarOpen = false;
-    user: User | null = null;
+    user: User = null!;
     selectedGame: string = '';
 
     constructor(
@@ -65,7 +65,7 @@ export class HomePageComponent extends UnsubscribeClass implements OnInit, OnDes
 
     createRoom(){
         console.log('create room')
-        this._gameservie.createRoom().subscribe(res => {
+        this._gameservie.createRoom(this.user?.id!).subscribe(res => {
             this.roomid = res;
             console.log(this.roomid)
             

@@ -18,6 +18,7 @@ import { GamesService } from 'app/resources/games/game.service';
 import { ErrorHandleService } from 'app/helper/error-handle.service';
 import { SnackbarService } from 'app/helper/snack-bar.service';
 import GlobalConstants from 'app/helper/constants';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
     selector: 'auth-sign-in',
@@ -56,6 +57,7 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
         private _router: Router,
         private _snackbarService: SnackbarService,
         private _errorHandleService: ErrorHandleService,
+        private _userService: UserService,
     ) {
         super();
     }
@@ -130,11 +132,16 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
         const idToken = response.credential;
 
         // Send the Google ID token to the backend for verification
-        this.http.post('http://localhost:3000/api/auth/verify-google', { idToken }).subscribe(
+        this.http.post('http://localhost:5000/api/auth/verify-google', { token_id: idToken }).subscribe(
         (res: any) => {
-            console.log('Login successful:', res);
-            // Handle success (e.g., save token, redirect user)
-            this.router.navigate(['home'])
+
+            this._userService.user = res.user;
+            this.authService.accessToken = res.token;
+
+            // window.location.reload();
+            window.location.href = '/home';
+
+            this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
         },
         (err: any) => {
             console.error('Login failed:', err);
