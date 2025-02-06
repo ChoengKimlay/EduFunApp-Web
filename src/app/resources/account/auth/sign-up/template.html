@@ -1,20 +1,26 @@
 <div class="flex flex-col items-center justify-center min-h-screen bg-gray-200">
-    <div class="flex flex-row items-center mb-6 gap-x-4">
-        <img src="/images/gic_logo.png" class="h-14 mb-4" />
+
+    <!-- Logo -->
+    <div class="flex flex-row items-center mb-6 gap-x-4 cursor-pointer" [routerLink]="['/']">
+        <img src="/images/gic_logo.png" class="h-14" />
         <h1 class="text-3xl font-semibold">EduFunApp</h1>
     </div>
 
-
-    <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full bg-white rounded-3xl shadow md:mt-0 sm:max-w-md xl:p-0">
 
         <!-- Register Section -->
         <ng-container *ngIf="isOTP === false; else otp">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+
+                <!-- Title -->
+                <h2 class="text-center text-3xl py-4 font-bold text-gray-900">
                     Create an account
-                </h1>
+                </h2>
+
+                <!-- Form -->
                 <form class="space-y-4 md:space-y-6"  [formGroup]="form" (ngSubmit)="onSignUp()">
 
+                    <!-- Username -->
                     <div>
                         <input type="username" name="username" id="username" formControlName="username"
                             class="bg-gray-50 p-4 border border-gray-300 text-gray-900 text-base rounded-lg focus:outline-none block w-full"
@@ -25,6 +31,7 @@
                         </div>
                     </div>
 
+                    <!-- Email -->
                     <div>
                         <input type="email" name="email" id="email" formControlName="email"
                             class="bg-gray-50 p-4 border border-gray-300 text-gray-900 text-base rounded-lg focus:outline-none block w-full"
@@ -36,6 +43,7 @@
                         </div>
                     </div>
 
+                    <!-- Password -->
                     <div>
                         <input type="password" name="password" id="password" placeholder="Password *" formControlName="password"
                             class="bg-gray-50 p-4 border border-gray-300 text-gray-900 text-base rounded-lg focus:outline-none block w-full"
@@ -46,6 +54,7 @@
                         </div>
                     </div>
 
+                    <!-- Confirm Password -->
                     <div>
                         <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password *" formControlName="confirm_password"
                             class="bg-gray-50 p-4 border border-gray-300 text-gray-900 text-base rounded-lg focus:outline-none block w-full"
@@ -56,16 +65,20 @@
                         </div>
                     </div>
 
+                    <!-- Sign Up -->
                     <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <span *ngIf="!isLoading"> Sign Up </span>
                         <mat-progress-spinner *ngIf=" isLoading " [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
                     </button>
 
+                    <!-- Or -->
                     <div class="flex items-center my-6">
                         <div class="flex-grow border-t"></div>
                         <span class="mx-4 text-gray-500">or</span>
                         <div class="flex-grow border-t"></div>
                     </div>
+
+                    <!-- Google -->
                     <div class="flex flex-col space-y-4">
                         <button type="button"
                             class="text-white bg-[#DB4437] hover:bg-[#C23321] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center">
@@ -78,10 +91,15 @@
                             Log in with Google
                         </button>
                     </div>
+
+                    <!-- Already have an account? -->
                     <p class="text-sm text-center font-light text-gray-500 dark:text-gray-400">
-                        Already have an account? <a [routerLink]="['/auth/sign-in']"
-                            class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                        Already have an account?
+                        <a [routerLink]="['/auth/sign-in']" class="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                            Login here
+                        </a>
                     </p>
+
                 </form>
 
             </div>
@@ -94,9 +112,11 @@
 
     </div>
 
-    <small class="text-gray-500 m-2"
-        >by signing up you accept our
-        <a href="#" class="underline">terms of use</a> and
-        <a href="#" class="underline">policies</a></small
-    >
+    <small class="text-gray-500 m-2">
+        By signing up you accept our
+        <a href="#" class="underline">terms of use</a>
+        and
+        <a href="#" class="underline">policies</a>
+    </small>
+
 </div>

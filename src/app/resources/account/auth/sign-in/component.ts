@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterModule } from '@angular/router';
+// Core Angular
+import { Component, OnDestroy, OnInit }                              from '@angular/core';
+import { CommonModule }                                              from '@angular/common';
+import { HttpClient }                                                from '@angular/common/http';
+import { Router, RouterModule }                                      from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
@@ -21,11 +20,11 @@ import GlobalConstants from 'app/helper/constants';
 import { UserService } from 'app/core/user/user.service';
 
 @Component({
-    selector: 'auth-sign-in',
-    standalone: true,
-    templateUrl: 'template.html',
-    styleUrl: 'style.scss',
-    imports: [
+    selector    : 'auth-sign-in',
+    standalone  : true,
+    templateUrl : 'template.html',
+    styleUrl    : 'style.scss',
+    imports     : [
         MatInputModule,
         MatFormFieldModule,
         MatButtonModule,
@@ -40,11 +39,12 @@ import { UserService } from 'app/core/user/user.service';
 })
 
 export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnDestroy {
-    game_session_pin: string = '';
 
-    form: any;
-    isLoading: boolean = false;
-    showBanner: boolean = true;
+    game_session_pin : string = '';
+    form             : any;
+    isLoading        : boolean = false;
+    showBanner       : boolean = true;
+    private _service: any;
 
     constructor(
         private router: Router,
@@ -64,7 +64,7 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
 
     ngOnInit() {
         this.FormBuilder();
-        
+
         this.googleAuthService.loadGoogleScript()
             .then(() => {
                 this.googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
@@ -77,12 +77,13 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
 
     FormBuilder() {
         this.form = this.formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required],
+            email    : ['', [Validators.required, Validators.email]],
+            password : ['',  Validators.required],
         });
     }
 
     onLogin() {
+
         if (this.form.invalid) {
             this.form.markAllAsTouched();
             return;
@@ -91,17 +92,17 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
         this.isLoading = true;
         const { email, password } = this.form.value;
 
-        this.authService.login(email, password)
+        this._service.login(email, password)
             .pipe(
                 finalize(() => (this.isLoading = false)),
                 takeUntil(this.unsubscribe$),
             )
             .subscribe({
-                next: (res) => {
-                    this.router.navigateByUrl('/home');
+                next: (res: any) => {
+                    this._router.navigateByUrl('/home');
                     this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
                 },
-                error: (err) => {
+                error: (err: any) => {
                     this._errorHandleService.handleHttpError(err);
                 },
             });
