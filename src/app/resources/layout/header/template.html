@@ -9,15 +9,15 @@
             <!-- <button mat-flat-button color="primary" (click)="createRoom()">Create</button> -->
 
             <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon class="">account_circle</mat-icon>
+                <mat-icon svgIcon="mdi:account-circle-outline" />
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                    <mat-icon>account_circle</mat-icon>
+                <button mat-menu-item [routerLink]="['/profile']">
+                    <mat-icon svgIcon="mdi:account-circle-outline" />
                     <span>Account</span>
                 </button>
                 <button mat-menu-item (click)="logout()">
-                    <mat-icon>logout</mat-icon>
+                    <mat-icon svgIcon="mdi:logout" />
                     <span>Log out</span>
                 </button>
             </mat-menu>

@@ -52,8 +52,6 @@ export class ProfilePageComponent extends UnsubscribeClass implements OnInit, On
         this._userService.user$.subscribe((user: User) => {
             this.user = user;
 
-            console.log(user)
-
             // Trigger change detection
             this._changeDetectorRef.markForCheck();
         });
