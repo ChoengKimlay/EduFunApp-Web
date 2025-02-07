@@ -7,6 +7,7 @@ import { CreateQuizComponent } from './resources/create-quiz/component';
 import { initialDataResolver } from './app.resolver';
 import { LayoutComponent } from './resources/layout/layout.component';
 import { DashboardPageComponent } from './resources/admin/dashboard/dashboard.component';
+import { ProfilePageComponent } from './resources/account/profile/component';
 
 export const appRoutes: Routes = [
     {
@@ -40,6 +41,10 @@ export const appRoutes: Routes = [
             {
                 path: 'dashboard',
                 component: DashboardPageComponent
+            },
+            {
+                path: 'profile',
+                component: ProfilePageComponent
             }
         ]
     }

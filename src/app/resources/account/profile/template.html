@@ -1,0 +1,39 @@
+<section>
+
+    <!-- Info -->
+    <div class="w-full flex flex-col items-center gap-2 p-4">
+
+        <!-- Action -->
+        <div class="w-full flex justify-end items-center gap-2">
+            <button class="px-2" mat-icon-button (click)="updatePassword()">
+                <mat-icon svgIcon="mdi:lock-outline" />
+            </button>
+            <button class="px-2" mat-icon-button (click)="updateProfile()">
+                <mat-icon svgIcon="mdi:square-edit-outline" />
+            </button>
+        </div>
+
+        <div class="max-w-32 w-32 h-32 flex justify-center">
+            <img class="border-2 w-32 h-32 border-blue-500 object-cover rounded-full"
+                src="/images/user.png" alt="Profile Image">
+        </div>
+
+        <span class="leading-[56px] text-3xl font-medium text-slate-900"> {{ user?.username }} </span>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div class="flex flex-row justify-center gap-2">
+                <mat-icon svgIcon="mdi:email-outline" />
+                <span class="text-gray-500"> {{ user?.email }} </span>
+            </div>
+
+            <div class="flex flex-row justify-center gap-2">
+                <mat-icon svgIcon="mdi:calendar-blank-outline" />
+                <span class="text-gray-500"> {{ user?.createdAt | date: 'dd LLL YYY' }} </span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

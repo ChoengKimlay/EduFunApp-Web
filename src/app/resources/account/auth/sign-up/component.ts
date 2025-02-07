@@ -102,7 +102,6 @@ export class AuthSignUpComponent extends UnsubscribeClass implements OnInit, OnD
 
         // Sign up the user
         this._authService.signUp(this.form.value).pipe(
-            finalize(() => { this.isLoading = false; }),
             takeUntil(this.unsubscribe$),
         ).subscribe({
             next: (res) => {

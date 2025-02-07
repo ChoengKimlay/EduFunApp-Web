@@ -1,0 +1,44 @@
+<!-- Header -->
+<div mat-dialog-title>
+    <span class="text-2xl font-medium flex-grow">Update Password</span>
+    <button [mat-dialog-close]="false" mat-icon-button class="ml-auto">
+        <mat-icon svgIcon="mdi:close"></mat-icon>
+    </button>
+</div>
+
+
+<mat-dialog-content class="border-t">
+    <form class="space-y-4" [formGroup]="form" (ngSubmit)="submit()">
+
+        <!-- Username -->
+        <div>
+            <input type="username" name="username" id="username" formControlName="username"
+                class="bg-gray-50 p-4 border border-gray-300 text-gray-900 text-base rounded-lg focus:outline-none block w-full"
+                placeholder="Username *">
+            <div *ngIf="form.get('username')?.invalid && (form.get('username')?.dirty || form.get('username')?.touched)"
+                class="text-red-500 text-sm mt-1">
+                <span *ngIf="form.get('username')?.errors?.['required']">Username is required</span>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+            <input type="email" name="email" id="email" formControlName="email"
+                class="bg-gray-50 p-4 border border-gray-300 text-gray-900 text-base rounded-lg focus:outline-none block w-full"
+                placeholder="Email *">
+            <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)"
+                class="text-red-500 text-sm mt-1">
+                <span *ngIf="form.get('email')?.errors?.['required']">Email is required</span>
+                <span *ngIf="form.get('email')?.errors?.['email']">Invalid email format</span>
+            </div>
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button (click)="submit()" class="w-[200px] flex items-center justify-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+        <span *ngIf="!isLoading"> Submit </span>
+        <mat-progress-spinner *ngIf="isLoading" [diameter]="24" [mode]="'indeterminate'" color="accent"></mat-progress-spinner>
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,44 @@
+<!-- Header -->
+<div mat-dialog-title class="w-full flex items-center">
+    <span class="text-2xl font-medium flex-grow">Change Password</span>
+    <button [mat-dialog-close]="false" mat-icon-button class="ml-auto">
+        <mat-icon svgIcon="mdi:close"></mat-icon>
+    </button>
+</div>
+
+
+<mat-dialog-content class="border-t">
+    <form class="space-y-4" [formGroup]="form" (ngSubmit)="submit()">
+
+        <!-- Password -->
+        <div>
+            <input type="password" name="password" id="password" placeholder="Password *" formControlName="password"
+                class="bg-gray-50 p-4 border border-gray-300 text-gray-900 text-base rounded-lg focus:outline-none block w-full"
+                required="">
+            <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)"
+                class="text-red-500 text-sm mt-1">
+                <span *ngIf="form.get('password')?.errors?.['required']">Password is required</span>
+            </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password *" formControlName="confirm_password"
+                class="bg-gray-50 p-4 border border-gray-300 text-gray-900 text-base rounded-lg focus:outline-none block w-full"
+                required=""/>
+                <div *ngIf="form.get('confirm_password')?.invalid && (form.get('confirm_password')?.dirty || form.get('confirm_password')?.touched)"
+                class="text-red-500 text-sm mt-1">
+                <span *ngIf="form.get('confirm_password')?.errors?.['required']">Confirm Password is required</span>
+            </div>
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button (click)="submit()" class="w-[200px] flex items-center justify-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+        <span *ngIf="!isLoading"> Submit </span>
+        <mat-progress-spinner *ngIf="isLoading" [diameter]="24" [mode]="'indeterminate'" color="accent"></mat-progress-spinner>
+    </button>
+</mat-dialog-actions>
+

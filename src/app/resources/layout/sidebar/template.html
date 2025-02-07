@@ -3,26 +3,21 @@
 
         <li class="p-2 rounded cursor-pointer flex flex-row gap-x-2 text-slate-800 items-center" [routerLink]="['/home']" routerLinkActive="text-white bg-gradient-to-r from-blue-300 to-blue-500/90"
             [routerLinkActiveOptions]="{exact: true}">
-            <mat-icon>home</mat-icon>
+            <mat-icon svgIcon="mdi:home-outline" />
             <a class="block">Home</a>
         </li>
 
         <li class="p-2 rounded cursor-pointer flex flex-row gap-x-2 text-slate-800 items-center" [routerLink]="['/dashboard']" routerLinkActive="text-white bg-gradient-to-r from-blue-300 to-blue-500/90"
             [routerLinkActiveOptions]="{exact: true}">
-            <mat-icon>dashboard</mat-icon>
+            <mat-icon svgIcon="mdi:view-dashboard-outline" />
             <a class="block">Dashboard</a>
         </li>
 
-        <!-- <li class="text-gray-700 p-2 rounded flex flex-row gap-x-2 items-center" [routerLink]="['/library']" routerLinkActive="bg-blue-900"
+        <li class="p-2 rounded cursor-pointer flex flex-row gap-x-2 text-slate-800 items-center" [routerLink]="['/profile']" routerLinkActive="text-white bg-gradient-to-r from-blue-300 to-blue-500/90"
             [routerLinkActiveOptions]="{exact: true}">
-            <mat-icon>menu</mat-icon>
-            <a class="block">Library</a>
+            <mat-icon svgIcon="mdi:account-circle-outline" />
+            <a class="block">Profile</a>
         </li>
-
-        <li class="text-gray-700 p-2 rounded flex flex-row gap-x-2 items-center" [routerLink]="['/report']" routerLinkActive="bg-blue-900" [routerLinkActiveOptions]="{exact: true}">
-            <mat-icon>bar_chart</mat-icon>
-            <a class="block">Report</a>
-        </li> -->
 
     </ul>
 </div>

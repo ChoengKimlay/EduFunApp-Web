@@ -1,10 +1,9 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { inject, Injectable }              from '@angular/core';
+import { HttpClient }                      from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { env } from '../../../env/env';
-import { Router } from '@angular/router';
-import { UserService }          from "app/core/user/user.service";
+import { map, switchMap }                  from 'rxjs/operators';
+import { env }                             from '../../../env/env';
+import { UserService }                     from "app/core/user/user.service";
 
 @Injectable({
     providedIn: 'root',

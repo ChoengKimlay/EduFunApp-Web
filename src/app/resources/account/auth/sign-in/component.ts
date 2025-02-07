@@ -12,7 +12,7 @@ import { MatInputModule }                                            from '@angu
 import { MatIconModule }                                             from '@angular/material/icon';
 import { MatCheckboxModule }                                         from '@angular/material/checkbox';
 import { MatCardModule }                                             from '@angular/material/card';
-import { AuthService }                                               from 'app/core/auth/auth.service';
+import { MatProgressSpinnerModule }                                  from '@angular/material/progress-spinner';
 
 // RxJS
 import { finalize, takeUntil }                                       from 'rxjs';
@@ -30,6 +30,8 @@ import { ErrorHandleService }                                        from 'app/h
 import { SnackbarService }                                           from 'app/helper/snack-bar.service';
 import GlobalConstants                                               from 'app/helper/constants';
 
+import { AuthService }                                               from 'app/core/auth/auth.service';
+
 @Component({
     selector    : 'auth-sign-in',
     standalone  : true,
@@ -46,6 +48,7 @@ import GlobalConstants                                               from 'app/h
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
+        MatProgressSpinnerModule,
     ],
 })
 
