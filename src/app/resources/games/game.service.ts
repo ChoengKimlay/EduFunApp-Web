@@ -29,13 +29,13 @@ export class GamesService {
         return this.socketSubject.asObservable();
     }
 
-    joinRoom(roomId: string): Observable<{ room:{ game: string, users: string[] }, userId: string}> {
+    joinRoom(roomId: string): Observable<{ room:{ game: string, users: string[], gameDetail: any }, userId: string}> {
         return new Observable((observer) => {
             // Emit the 'join' event to the server with the room id
             this.socket.emit('room/join', { roomId });
 
             // Listen for the 'roomJoined' event from the server (only once)
-            this.socket.once('room/data', (res: { room: { game: string, users: string[] }, userId: string}) => {
+            this.socket.once('room/data', (res: { room: { game: string, users: string[], gameDetail: any }, userId: string}) => {
                 // Once we receive the room ID, pass it to the observer
                 observer.next(res);
 
@@ -45,10 +45,10 @@ export class GamesService {
         });
     }
 
-    createRoom(): Observable<any> {
+    createRoom(userid: number): Observable<any> {
         return new Observable((observer) => {
             // Emit the 'join' event to the server with the room id
-            this.socket.emit('room/create', { game: 'wordcloud '});
+            this.socket.emit('room/create', { game: 'wordcloud ', user_id: userid});
 
             // Listen for the 'roomJoined' event from the server (only once)
             this.socket.once('room/roomid', (res: { roomId: string }) => {

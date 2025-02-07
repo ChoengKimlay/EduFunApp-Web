@@ -1,36 +1,25 @@
-// Core Angular
 import { Component, OnDestroy, OnInit }                              from '@angular/core';
-import { CommonModule }                                              from '@angular/common';
-import { HttpClient }                                                from '@angular/common/http';
 import { Router, RouterModule }                                      from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
-// Material
-import { MatButtonModule }                                           from '@angular/material/button';
-import { MatFormFieldModule }                                        from '@angular/material/form-field';
-import { MatInputModule }                                            from '@angular/material/input';
-import { MatIconModule }                                             from '@angular/material/icon';
 import { MatCheckboxModule }                                         from '@angular/material/checkbox';
 import { MatCardModule }                                             from '@angular/material/card';
-import { MatProgressSpinnerModule }                                  from '@angular/material/progress-spinner';
-
-// RxJS
+import { AuthService }                                               from 'app/core/auth/auth.service';
+import { HttpClient }                                                from '@angular/common/http';
 import { finalize, takeUntil }                                       from 'rxjs';
-
-// Core
 import { UnsubscribeClass }                                          from 'app/core/class/unsubscribe.class';
 import { GoogleAuthService }                                         from 'app/core/auth/google.service';
+import { CommonModule }                                              from '@angular/common';
 import { ParticipantService }                                        from 'app/core/user/participant.service';
-
-// Resources
 import { GamesService }                                              from 'app/resources/games/game.service';
-
-// Helper
 import { ErrorHandleService }                                        from 'app/helper/error-handle.service';
 import { SnackbarService }                                           from 'app/helper/snack-bar.service';
 import GlobalConstants                                               from 'app/helper/constants';
-
-import { AuthService }                                               from 'app/core/auth/auth.service';
+import { UserService }                                               from 'app/core/user/user.service';
+import { MatInputModule }                                            from '@angular/material/input';
+import { MatFormFieldModule }                                        from '@angular/material/form-field';
+import { MatButtonModule }                                           from '@angular/material/button';
+import { MatIconModule }                                             from '@angular/material/icon';
+import { MatProgressSpinnerModule }                                  from '@angular/material/progress-spinner';
 
 @Component({
     selector    : 'auth-sign-in',
@@ -58,17 +47,20 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
     form             : any;
     isLoading        : boolean = false;
     showBanner       : boolean = true;
+    private _service: any;
 
     constructor(
-        private _service            : AuthService,
-        private _http               : HttpClient,
-        private _googleAuthService  : GoogleAuthService,
-        private _formBuilder        : FormBuilder,
-        private _gameService        : GamesService,
-        private _participantService : ParticipantService,
-        private _router             : Router,
-        private _snackbarService    : SnackbarService,
-        private _errorHandleService : ErrorHandleService,
+        private router: Router,
+        private authService: AuthService,
+        private http: HttpClient,
+        private googleAuthService: GoogleAuthService,
+        private formBuilder: FormBuilder,
+        private _gameService: GamesService,
+        private _participantService: ParticipantService,
+        private _router: Router,
+        private _snackbarService: SnackbarService,
+        private _errorHandleService: ErrorHandleService,
+        private _userService: UserService,
     ) {
         super();
     }
@@ -76,9 +68,9 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
     ngOnInit() {
         this.FormBuilder();
 
-        this._googleAuthService.loadGoogleScript()
+        this.googleAuthService.loadGoogleScript()
             .then(() => {
-                this._googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
+                this.googleAuthService.initializeGoogleSignIn(this.handleGoogleSignIn.bind(this));
             })
             .catch((error) => {
                 console.error('Failed to load Google SDK:', error);
@@ -87,7 +79,7 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
 
 
     FormBuilder() {
-        this.form = this._formBuilder.group({
+        this.form = this.formBuilder.group({
             email    : ['', [Validators.required, Validators.email]],
             password : ['',  Validators.required],
         });
@@ -109,11 +101,11 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
                 takeUntil(this.unsubscribe$),
             )
             .subscribe({
-                next: (res) => {
+                next: (res: any) => {
                     this._router.navigateByUrl('/home');
                     this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
                 },
-                error: (err) => {
+                error: (err: any) => {
                     this._errorHandleService.handleHttpError(err);
                 },
             });
@@ -144,11 +136,16 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
         const idToken = response.credential;
 
         // Send the Google ID token to the backend for verification
-        this._http.post('http://localhost:3000/api/auth/verify-google', { idToken }).subscribe(
+        this.http.post('http://localhost:5000/api/auth/verify-google', { token_id: idToken }).subscribe(
         (res: any) => {
-            console.log('Login successful:', res);
-            // Handle success (e.g., save token, redirect user)
-            this._router.navigate(['home'])
+
+            this._userService.user = res.user;
+            this.authService.accessToken = res.token;
+
+            // window.location.reload();
+            window.location.href = '/home';
+
+            this._snackbarService.openSnackBar(res?.message || GlobalConstants.genericResponse, GlobalConstants.success);
         },
         (err: any) => {
             console.error('Login failed:', err);

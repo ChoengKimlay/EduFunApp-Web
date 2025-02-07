@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CloudData, CloudOptions } from 'angular-tag-cloud-module';
 import { TagCloudComponent } from 'angular-tag-cloud-module';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
     selector: 'wordcloud',
@@ -35,7 +36,7 @@ export class WordCloudComponent implements OnInit {
     message: string = '';
     isHoster: boolean = false;
     messages$ = new BehaviorSubject<string[]>([]); // Reactive message list
-    question: string = 'Enter your question?';
+    question: string = '';
     public data: CloudData[] = [
         { text: 'gaming', weight: 2, color: '#f59e0b' },
         { text: 'i love you', weight: 2, color: '#2563eb' },
@@ -67,6 +68,7 @@ export class WordCloudComponent implements OnInit {
     constructor(
         private _participantService: ParticipantService,
         private _gameService: GamesService,
+        private _userService: UserService,
     ) {  }
 
     ngOnInit() {
@@ -85,6 +87,9 @@ export class WordCloudComponent implements OnInit {
                 this._gameService.joinRoom(this.participant.room_id).subscribe({
                     next: (res) => {
                         console.log('Room joined:', res);
+                        if(res?.room?.gameDetail?.hoster === this._userService.user?.id){ 
+                            this.isHoster = true;
+                        }
                         this.total_user = res.room.users.length;
                         this.setupSocketListeners();
                     },

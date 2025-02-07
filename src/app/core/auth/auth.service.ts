@@ -36,7 +36,7 @@ export class AuthService {
             .post<any>(`${env.api}/auth/login`, { email, password })
             .pipe(
                 map((res) => {
-
+                    this.userService = res.user;
                     this.accessToken = res.token;
 
                     return res;
