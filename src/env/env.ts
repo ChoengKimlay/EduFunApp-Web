@@ -1,6 +1,6 @@
 export const env = {
-    api: 'http://localhost:5000/api',
-    ws: 'ws://localhost:5000',
+    api: 'http://localhost:9003/api',
+    ws: 'ws://localhost:9003',
     google_client_id: '445770809983-3ed9kb6q7t7ejjfcivdgl7kr2106aeua.apps.googleusercontent.com',
 }
 
