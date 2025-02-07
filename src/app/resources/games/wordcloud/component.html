@@ -1,7 +1,7 @@
 <div class="relative flex flex-col justify-center items-center min-h-screen bg-slate-100">
-    <input [disabled]="isHoster"  placeholder="enter question here" [(ngModel)]="question" class=" {{ question.length == 0 ? 'underline':''}}
+    <input [disabled]="!isHoster"  placeholder="enter question here" [(ngModel)]="question" class=" {{ question.length == 0 ? 'underline':''}}
     outline-none w-full placeholder:opacity-30 max-w-screen px-2 hover:underline focus:underline text-wrap text-center absolute motion-preset-slide-down-lg motion-opacity-in-0 motion-duration-200 z-10 top-6 right-1/2 translate-x-1/2 text-2xl tracking-wider font-bold bg-clip-text bg-gradient-to-r from-slate-800 via-gray-900 to-slate-800">
-    <ng-container *ngIf="isHoster; else renderWordcloud">
+    <ng-container *ngIf="!isHoster; else renderWordcloud">
         <!-- participant container only allow to input message -->
         <div class="max-w-sm w-full space-y-4 p-6 rounded-lg bg-white">
             <p>Type a message</p>

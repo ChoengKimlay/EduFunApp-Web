@@ -47,7 +47,6 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
     form             : any;
     isLoading        : boolean = false;
     showBanner       : boolean = true;
-    private _service: any;
 
     constructor(
         private router: Router,
@@ -95,7 +94,7 @@ export class AuthSignInComponent extends UnsubscribeClass implements OnInit, OnD
         this.isLoading = true;
         const { email, password } = this.form.value;
 
-        this._service.login(email, password)
+        this.authService.login(email, password)
             .pipe(
                 finalize(() => (this.isLoading = false)),
                 takeUntil(this.unsubscribe$),
